@@ -27,6 +27,7 @@ const loadComponent = async (elementId, filePath) => {
  */
 const loadSharedComponents = async () => {
   return Promise.all([
+    loadComponent("logo-component", "./layouts/logo.html"),
     loadComponent("header-component", "./layouts/header.html"),
   ]);
 };
