@@ -29,6 +29,7 @@ const loadSharedComponents = async () => {
   return Promise.all([
     loadComponent("logo-component", "./layouts/logo.html"),
     loadComponent("header-component", "./layouts/header.html"),
+    loadComponent("footer-component", "./layouts/footer.html"),
   ]);
 };
 
