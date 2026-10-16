@@ -41,6 +41,11 @@ body {
   --color-button-secondary-text: var(--color-brand-primary);
 }
 
+.bg-neutral-cream {
+  background-color: var(--color-neutral-cream);
+}
+
+
 .bg-color-secondary {
   background-color: var(--color-brand-secondary);
 }
@@ -51,6 +56,25 @@ body {
 
 .color-neutral-dark {
   color: var(--color-neutral-dark);
+}
+
+.w-60p {
+  width: 60px;
+  height: 50px;
+}
+
+.divider-responsive {
+  border-bottom: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color);
+  padding-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .divider-responsive {
+    border-bottom: 0;
+    padding-bottom: 0;
+    border-right: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color);
+    padding-right: 1.5rem;
+  }
 }
 
 /* .btn-customer {
