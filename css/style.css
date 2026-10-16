@@ -1,0 +1,91 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* =========================
+     1. Colores de marca
+  ========================= */
+  --color-brand-primary: #0a3f40;
+  --color-brand-secondary: #1bb8aa;
+
+  --color-brand-terracotta: #d05a3f;
+  --color-brand-orange: #e09633;
+
+  --color-neutral-cream: #faf6f0;
+  --color-neutral-dark: #1e2b38;
+
+  /* =========================
+     2. Colores semánticos
+  ========================= */
+  --color-background: var(--color-neutral-cream);
+  --color-surface: #ffffff;
+
+  --color-text-primary: var(--color-neutral-dark);
+  --color-text-inverse: #ffffff;
+
+  --color-link: var(--color-brand-primary);
+  --color-accent: var(--color-brand-secondary);
+  --color-promotion: var(--color-brand-terracotta);
+
+  --color-border: #e5ded3;
+
+  /* =========================
+     3. Botones
+  ========================= */
+  --color-button-primary-bg: var(--color-brand-primary);
+  --color-button-primary-text: #ffffff;
+
+  --color-button-secondary-bg: var(--color-brand-secondary);
+  --color-button-secondary-text: var(--color-brand-primary);
+}
+
+.bg-color-secondary {
+  background-color: var(--color-brand-secondary);
+}
+
+.color-primary {
+  color: var(--color-brand-primary);
+}
+
+.color-neutral-dark {
+  color: var(--color-neutral-dark);
+}
+
+/* .btn-customer {
+  background-color: var(--color-brand-primary) !important;
+  color: var(--color-neutral-cream) !important;
+  border: 1px solid var(--color-brand-primary) ;
+}
+
+.btn-customer:hover {
+  background-color: #082F30;
+  color: #FFFFFF;
+  border-color: #082F30;
+}
+
+.btn-customer:active {
+  background-color: #062627;
+  color: #FFFFFF;
+  border-color: #062627;
+} */
+
+
+.btn-customer {
+  background-color: #0A3F40 !important;
+  color: #FFFFFF !important;
+  border: 1px solid #0A3F40 !important;
+}
+
+.btn-customer:hover {
+  background-color: #082F30 !important;
+  color: #FFFFFF !important;
+  border-color: #082F30 !important;
+}
+
+.btn-customer:active {
+  background-color: #062627;
+  color: #FFFFFF;
+  border-color: #062627;
+}
