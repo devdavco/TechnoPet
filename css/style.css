@@ -3,6 +3,11 @@ body {
   padding: 0;
 }
 
+/* p, h1, h2,h3,h4,h5 {
+  padding: 0;
+  margin: 0;
+} */
+
 :root {
   /* =========================
      1. Colores de marca
@@ -50,6 +55,10 @@ body {
   background-color: var(--color-brand-secondary);
 }
 
+.bg-color-primary {
+  background-color: var(--color-brand-primary);
+}
+
 .color-primary {
   color: var(--color-brand-primary);
 }
@@ -60,7 +69,16 @@ body {
 
 .w-60p {
   width: 60px;
-  height: 50px;
+  height: 60px;
+}
+
+.w-10p {
+  width: 10px;
+  height: 10px;
+}
+
+.badge-container {
+  background-color: #B8E9E9
 }
 
 .divider-responsive {
@@ -76,25 +94,6 @@ body {
     padding-right: 1.5rem;
   }
 }
-
-/* .btn-customer {
-  background-color: var(--color-brand-primary) !important;
-  color: var(--color-neutral-cream) !important;
-  border: 1px solid var(--color-brand-primary) ;
-}
-
-.btn-customer:hover {
-  background-color: #082F30;
-  color: #FFFFFF;
-  border-color: #082F30;
-}
-
-.btn-customer:active {
-  background-color: #062627;
-  color: #FFFFFF;
-  border-color: #062627;
-} */
-
 
 .btn-customer {
   background-color: #0A3F40 !important;
@@ -112,4 +111,85 @@ body {
   background-color: #062627;
   color: #FFFFFF;
   border-color: #062627;
+}
+
+
+/* Section categories */
+
+/* Eyebrow: "EXPLORA LA GAMA" */
+.eyebrow {
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-brand-primary);
+}
+
+.categories-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.categories-scroll > * {
+  flex: 0 0 80%;
+  scroll-snap-align: start;
+}
+
+@media (min-width: 768px) {
+  .categories-scroll {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    overflow: visible;
+    padding-bottom: 0;
+  }
+  .categories-scroll > * {
+    flex: initial;
+  }
+}
+
+/* Card */
+.category-card {
+  padding: 2rem;
+  background-color: var(--color-surface);
+  border-radius: 1.25rem;
+  color: var(--color-neutral-dark);
+  text-decoration: none;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.category-card .category-icon {
+  width: 50px;
+  height: 50px;
+  background-color: #b8e9e9;
+  color: var(--color-brand-primary);
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.category-card .category-arrow {
+  font-size: 1.5rem;
+  color: #6c757d;
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+
+.category-card p {
+  color: #5b6670;
+}
+
+/* Hover */
+.category-card:hover,
+.category-card:focus-visible {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 30px rgba(10, 63, 64, 0.12);
+  color: var(--color-neutral-dark);
+}
+
+.category-card:hover .category-icon,
+.category-card:focus-visible .category-icon {
+  background-color: var(--color-brand-primary);
+  color: #fff;
+}
+
+.category-card:hover .category-arrow,
+.category-card:focus-visible .category-arrow {
+  color: var(--color-brand-primary);
+  transform: translateX(4px);
 }
