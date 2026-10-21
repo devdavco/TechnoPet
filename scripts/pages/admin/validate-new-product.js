@@ -99,9 +99,6 @@ export const validateProductForm = async (e) => {
     return;
   }
 
-  // Avisa a otros componentes (ej. la tabla) que hay datos nuevos
-  document.dispatchEvent(new CustomEvent("products:updated"));
-
   form.reset();
   form.classList.remove("was-validated");
   bootstrap.Modal.getInstance(document.getElementById("createProduct")).hide();
