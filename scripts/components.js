@@ -30,6 +30,7 @@ const loadSharedComponents = async () => {
     /* Componentes comunes */
     loadComponent("header-component", "./layouts/header.html"),
     loadComponent("footer-component", "./layouts/footer.html"),
+    loadComponent("header-admin", "./layouts/headerAdmin.html"),
     /* Componentes home page */
     loadComponent("section-hero", "./scripts/pages/home/section-hero.html"),
   ]);
