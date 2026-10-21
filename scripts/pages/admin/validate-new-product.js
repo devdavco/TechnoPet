@@ -1,4 +1,4 @@
-import { saveProduct } from "../../../services/api_products.js";
+import { saveProduct, getProducts } from "../../../services/api_products.js";
 
 const rules = {
   name: { min: 3, required: true },
@@ -8,21 +8,7 @@ const rules = {
 const IMAGE = {
   types: ["image/png", "image/jpeg", "image/webp"],
   maxSize: 5 * 1024 * 1024, // 5MB
-  minWidth: 800,
-  minHeight: 800,
 };
-
-const getImageSize = (file) =>
-  new Promise((resolve, reject) => {
-    const img = new Image();
-    const url = URL.createObjectURL(file);
-    img.onload = () => {
-      URL.revokeObjectURL(url);
-      resolve({ width: img.width, height: img.height });
-    };
-    img.onerror = reject;
-    img.src = url;
-  });
 
 // Redimensiona y comprime la imagen para que quepa en localStorage
 const fileToDataURL = (file, maxSize = 800) =>
@@ -45,7 +31,7 @@ const fileToDataURL = (file, maxSize = 800) =>
     img.src = url;
   });
 
-const validateImage = async (input) => {
+const validateImage = (input) => {
   const zone = input.form.querySelector(".dropzone");
   const feedback = input.form.querySelector(".dropzone-feedback");
   const file = input.files[0];
@@ -57,21 +43,17 @@ const validateImage = async (input) => {
       error = "Formato no permitido. Usa PNG, JPG o WebP.";
     } else if (file.size > IMAGE.maxSize) {
       error = "La imagen supera los 5MB.";
-    } else {
-      try {
-        const { width, height } = await getImageSize(file);
-        if (width < IMAGE.minWidth || height < IMAGE.minHeight) {
-          error = `La imagen debe medir al menos ${IMAGE.minWidth}×${IMAGE.minHeight}px.`;
-        }
-      } catch {
-        error = "No se pudo leer la imagen.";
-      }
     }
   }
 
   input.setCustomValidity(error);
   feedback.textContent = error;
   zone.classList.toggle("is-invalid", Boolean(error));
+};
+
+const getNextId = () => {
+  const products = getProducts();
+  return products.length ? Math.max(...products.map((p) => p.id)) + 1 : 1;
 };
 
 export const validateProductForm = async (e) => {
@@ -92,7 +74,7 @@ export const validateProductForm = async (e) => {
     }
   });
 
-  await validateImage(form.elements.image);
+  validateImage(form.elements.image);
 
   form.classList.add("was-validated");
 
@@ -102,7 +84,7 @@ export const validateProductForm = async (e) => {
   const file = form.elements.image.files[0];
 
   const product = {
-    id: 1,
+    id: getNextId(),
     name: formData.name.trim(),
     category: Number(formData.category),
     price: Number(formData.price),
@@ -116,6 +98,9 @@ export const validateProductForm = async (e) => {
     alert("No hay espacio suficiente para guardar el producto.");
     return;
   }
+
+  // Avisa a otros componentes (ej. la tabla) que hay datos nuevos
+  document.dispatchEvent(new CustomEvent("products:updated"));
 
   form.reset();
   form.classList.remove("was-validated");

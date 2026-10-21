@@ -29,7 +29,7 @@ const contentForm = {
     },
     image: {
       title: "Imagen del producto",
-      placeholder: "PNG, JPG o WebP (Hasta 5MB, mín. 800×800px)",
+      placeholder: "PNG, JPG o WebP (Hasta 5MB)",
     },
   },
 };
