@@ -15,8 +15,8 @@ const contentForm = {
       placeholder: "Selecciona una categoría",
     },
     price: {
-      title: "Precio ($ USD)",
-      placeholder: "89.00",
+      title: "Precio (COP)",
+      placeholder: "150000",
     },
     quantity: {
       title: "Cantidad / Stock",
@@ -29,7 +29,7 @@ const contentForm = {
     },
     image: {
       title: "Imagen del producto",
-      placeholder: "PNG, JPG o WebP (Hasta 5MB, mín. 800×800px)",
+      placeholder: "PNG, JPG o WebP",
     },
   },
 };
@@ -109,7 +109,7 @@ class NewProductComponent extends HTMLElement {
                   </label>
                   <div class="input-group has-validation">
                     <span class="input-group-text fw-semibold">$</span>
-                    <input type="number" class="form-control" id="price" name="price" placeholder="${contentForm.inputs.price.placeholder}" min="0.01" step="0.01" required />
+                    <input type="number" class="form-control" id="price" name="price" placeholder="${contentForm.inputs.price.placeholder}" min="1" step="1" required />
                     <div class="invalid-feedback">Ingresa un precio válido</div>
                   </div>
                 </div>

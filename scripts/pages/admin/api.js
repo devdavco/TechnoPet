@@ -1,5 +1,4 @@
 const PRODUCTS_URL = "./data/productos.json";
-const CATEGORIES_URL = "./data/categories.json";
 
 // Trae la lista de productos desde el JSON
 export async function getProducts() {
@@ -17,19 +16,5 @@ export async function getProducts() {
   }
 }
 
-// Trae la lista de categorías desde el JSON
-export async function getCategories() {
-  try {
-    const response = await fetch(CATEGORIES_URL);
-
-    if (!response.ok) throw new Error("Error al cargar las categorías");
-
-    const data = await response.json();
-
-    // El arreglo viene dentro de la propiedad "categories", no en la raíz
-    return data.categories;
-  } catch (error) {
-    console.log("Hubo un error al buscar las categorías: ", error.message);
-    return [];
-  }
-}
+// Las categorías se cargan con getCategories de services/api_categories.js,
+// que también usan la home y el formulario de crear producto.

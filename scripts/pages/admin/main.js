@@ -1,4 +1,5 @@
-import { getProducts, getCategories } from "./api.js";
+import { getProducts } from "./api.js";
+import { getCategories } from "../../../services/api_categories.js";
 import { getStoredProducts, saveProducts } from "./storage.js";
 import { isActive, findProductById, generateId } from "./utils.js";
 import {
@@ -30,6 +31,8 @@ let categories = [];
 // Id del producto que se está editando o eliminando en el modal
 let editingId = null;
 
+const NO_SPACE_MESSAGE = "No hay espacio suficiente para guardar el producto";
+
 // Pinta la lista y conecta los botones nuevos.
 // Se llama después de cada cambio, porque al pintar se crean botones nuevos.
 function renderAll() {
@@ -42,10 +45,14 @@ function renderAll() {
   setupDeleteEvent(handleDelete);
 }
 
-// Guarda en localStorage y vuelve a pintar
+// Guarda en localStorage y vuelve a pintar.
+// Devuelve true si se guardó; si no, avisa con un toast que no hay espacio.
 function saveAndRender() {
-  saveProducts(products);
+  const saved = saveProducts(products);
   renderAll();
+
+  if (!saved) showToast(NO_SPACE_MESSAGE);
+  return saved;
 }
 
 /* ===== Acciones ===== */
@@ -86,8 +93,7 @@ function handleSave(event) {
 
   editingId = null;
   closeModal();
-  saveAndRender();
-  showToast("Producto actualizado");
+  if (saveAndRender()) showToast("Producto actualizado");
 }
 
 function handleToggle(id) {
@@ -97,7 +103,7 @@ function handleToggle(id) {
   // Si estaba visible lo ocultamos, y al revés
   product.active = !isActive(product);
 
-  saveAndRender();
+  if (!saveAndRender()) return;
 
   if (product.active) {
     showToast("Producto visible en la tienda");
@@ -114,8 +120,7 @@ function handleDuplicate(id) {
   const copy = { ...product, id: generateId(products), name: product.name + " (copia)" };
   products.push(copy);
 
-  saveAndRender();
-  showToast("Producto duplicado");
+  if (saveAndRender()) showToast("Producto duplicado");
 }
 
 // Solo abre el modal de confirmación; se elimina en handleConfirmDelete
@@ -133,23 +138,23 @@ function handleConfirmDelete() {
 
   editingId = null;
   closeModal();
-  saveAndRender();
-  showToast("Producto eliminado");
+  if (saveAndRender()) showToast("Producto eliminado");
 }
 
 /*
-  Producto nuevo desde el formulario de crear (lo hace otro compañero).
-  El formulario debe disparar este evento con el producto en "detail":
+  Producto nuevo desde el formulario de crear (validate-new-product.js).
+  El formulario dispara este evento con el producto en "detail":
 
     document.dispatchEvent(new CustomEvent("product:created", { detail: product }));
 
-  El objeto product debe tener la misma estructura que data/products.json:
+  El objeto product tiene la misma estructura que data/productos.json:
     {
       "id": 6,                 // opcional: si no viene, se genera aquí
       "name": "Arenero automático",
-      "price": 12500,
+      "price": 150000,
       "currency_price": "$",
-      "description": "Arenero autolimpiable",
+      "description": "Arenero autolimpiable",   // puede venir vacío
+      "image": "data:image/jpeg;base64,...",   // o null si no se subió imagen
       "quantity": 2,
       "category": 4            // id de data/categories.json
     }
@@ -163,7 +168,16 @@ function handleProductCreated(event) {
   }
 
   products.push(product);
-  saveAndRender();
+
+  // Si no se pudo guardar, sacamos el producto de la lista para no mostrar algo que no quedó guardado
+  if (!saveProducts(products)) {
+    products.pop();
+    showToast(NO_SPACE_MESSAGE);
+    return;
+  }
+
+  renderAll();
+  showToast("Producto creado");
 }
 
 /* ===== Inicio ===== */

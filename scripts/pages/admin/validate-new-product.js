@@ -1,28 +1,12 @@
-import { saveProduct } from "../../../services/api_products.js";
-
 const rules = {
   name: { min: 3, required: true },
   description: { min: 15, required: false },
 };
 
+// Solo validamos el formato; el tamaño lo ajusta fileToDataURL antes de guardar
 const IMAGE = {
   types: ["image/png", "image/jpeg", "image/webp"],
-  maxSize: 5 * 1024 * 1024, // 5MB
-  minWidth: 800,
-  minHeight: 800,
 };
-
-const getImageSize = (file) =>
-  new Promise((resolve, reject) => {
-    const img = new Image();
-    const url = URL.createObjectURL(file);
-    img.onload = () => {
-      URL.revokeObjectURL(url);
-      resolve({ width: img.width, height: img.height });
-    };
-    img.onerror = reject;
-    img.src = url;
-  });
 
 // Redimensiona y comprime la imagen para que quepa en localStorage
 const fileToDataURL = (file, maxSize = 800) =>
@@ -45,28 +29,15 @@ const fileToDataURL = (file, maxSize = 800) =>
     img.src = url;
   });
 
-const validateImage = async (input) => {
+const validateImage = (input) => {
   const zone = input.form.querySelector(".dropzone");
   const feedback = input.form.querySelector(".dropzone-feedback");
   const file = input.files[0];
   let error = "";
 
   // La imagen es opcional
-  if (file) {
-    if (!IMAGE.types.includes(file.type)) {
-      error = "Formato no permitido. Usa PNG, JPG o WebP.";
-    } else if (file.size > IMAGE.maxSize) {
-      error = "La imagen supera los 5MB.";
-    } else {
-      try {
-        const { width, height } = await getImageSize(file);
-        if (width < IMAGE.minWidth || height < IMAGE.minHeight) {
-          error = `La imagen debe medir al menos ${IMAGE.minWidth}×${IMAGE.minHeight}px.`;
-        }
-      } catch {
-        error = "No se pudo leer la imagen.";
-      }
-    }
+  if (file && !IMAGE.types.includes(file.type)) {
+    error = "Formato no permitido. Usa PNG, JPG o WebP.";
   }
 
   input.setCustomValidity(error);
@@ -92,7 +63,7 @@ export const validateProductForm = async (e) => {
     }
   });
 
-  await validateImage(form.elements.image);
+  validateImage(form.elements.image);
 
   form.classList.add("was-validated");
 
@@ -101,21 +72,19 @@ export const validateProductForm = async (e) => {
   const formData = Object.fromEntries(new FormData(form));
   const file = form.elements.image.files[0];
 
+  // Misma estructura que data/productos.json. Sin id: lo genera main.js con generateId
   const product = {
-    id: 1,
     name: formData.name.trim(),
-    category: Number(formData.category),
     price: Number(formData.price),
-    stock: Number(formData.stock),
+    currency_price: "$",
     description: formData.description.trim(),
     image: file ? await fileToDataURL(file) : null,
-    createdAt: new Date().toISOString(),
+    quantity: Number(formData.stock),
+    category: Number(formData.category),
   };
 
-  if (!saveProduct(product)) {
-    alert("No hay espacio suficiente para guardar el producto.");
-    return;
-  }
+  // main.js escucha este evento: agrega el producto, lo guarda en localStorage y vuelve a pintar la lista
+  document.dispatchEvent(new CustomEvent("product:created", { detail: product }));
 
   form.reset();
   form.classList.remove("was-validated");
