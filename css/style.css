@@ -193,3 +193,11 @@ body {
   color: var(--color-brand-primary);
   transform: translateX(4px);
 }
+
+/* Admin: descripción de máximo 2 líneas en las cards */
+.text-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
