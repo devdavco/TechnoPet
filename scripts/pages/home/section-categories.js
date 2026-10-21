@@ -1,24 +1,13 @@
-const API_URL = "./data/categories.json"
-const getCategories = async () => {
-  try {
-      const response = await fetch(API_URL);
-      if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
-      const data = await response.json();
-      return data.categories;
-    } catch (error) {
-      console.error("No se pudieron cargar las categorías:", error);
-      return []
-    }
-}
+import { getCategories } from "../../../services/api_categories.js";
 class SectionCategories extends HTMLElement {
   async connectedCallback() {
     const content = {
-        title: "Explora la gama",
-        subtitle: "Compra por categoría",
-        textCategory: "Categorías principales"
-    }
+      title: "Explora la gama",
+      subtitle: "Compra por categoría",
+      textCategory: "Categorías principales",
+    };
 
-    const categories = await getCategories()
+    const categories = await getCategories();
 
     const cards = categories
       .map(
@@ -35,7 +24,7 @@ class SectionCategories extends HTMLElement {
               <p class="fs-6 mb-0">${item.description}</p>
             </a>
           </div>
-        `
+        `,
       )
       .join("");
 
