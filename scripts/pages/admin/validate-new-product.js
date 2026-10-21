@@ -1,10 +1,9 @@
-import { saveProduct, getProducts } from "../../../services/api_products.js";
-
 const rules = {
   name: { min: 3, required: true },
   description: { min: 15, required: false },
 };
 
+// Validamos formato y peso; las dimensiones las ajusta fileToDataURL antes de guardar
 const IMAGE = {
   types: ["image/png", "image/jpeg", "image/webp"],
   maxSize: 5 * 1024 * 1024, // 5MB
@@ -51,11 +50,6 @@ const validateImage = (input) => {
   zone.classList.toggle("is-invalid", Boolean(error));
 };
 
-const getNextId = () => {
-  const products = getProducts();
-  return products.length ? Math.max(...products.map((p) => p.id)) + 1 : 1;
-};
-
 export const validateProductForm = async (e) => {
   e.preventDefault();
   const form = e.target;
@@ -83,21 +77,19 @@ export const validateProductForm = async (e) => {
   const formData = Object.fromEntries(new FormData(form));
   const file = form.elements.image.files[0];
 
+  // Misma estructura que data/productos.json. Sin id: lo genera main.js con generateId
   const product = {
-    id: getNextId(),
     name: formData.name.trim(),
-    category: Number(formData.category),
     price: Number(formData.price),
-    stock: Number(formData.stock),
+    currency_price: "$",
     description: formData.description.trim(),
     image: file ? await fileToDataURL(file) : null,
-    createdAt: new Date().toISOString(),
+    quantity: Number(formData.stock),
+    category: Number(formData.category),
   };
 
-  if (!saveProduct(product)) {
-    alert("No hay espacio suficiente para guardar el producto.");
-    return;
-  }
+  // main.js escucha este evento: agrega el producto, lo guarda en localStorage y vuelve a pintar la lista
+  document.dispatchEvent(new CustomEvent("product:created", { detail: product }));
 
   form.reset();
   form.classList.remove("was-validated");
