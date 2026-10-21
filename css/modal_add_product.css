@@ -1,0 +1,64 @@
+.product-modal {
+  --brand: #2b6a5f;
+  --brand-soft: #eef4ff;
+  --brand-field: #ebf2fe;
+}
+
+.product-soft {
+  background-color: var(--brand-soft);
+}
+
+.btn-brand {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: var(--brand);
+  --bs-btn-border-color: var(--brand);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #235a50;
+  --bs-btn-hover-border-color: #235a50;
+  --bs-btn-active-bg: #1e4d44;
+  --bs-btn-active-border-color: #1e4d44;
+  background-color: var(--brand);
+  color: #fff;
+}
+
+.brand-icon {
+  width: 3rem;
+  height: 3rem;
+  background-color: var(--brand);
+  color: #fff;
+}
+
+.product-modal .form-control,
+.product-modal .form-select,
+.product-modal .input-group-text {
+  background-color: var(--brand-field);
+  border-color: transparent;
+}
+
+.dropzone {
+  border: 2px dashed #b8c4c2;
+  background-color: #f6f9ff;
+  cursor: pointer;
+  transition:
+    border-color 0.2s,
+    background-color 0.2s;
+}
+.dropzone:hover,
+.dropzone.is-dragging {
+  border-color: var(--brand);
+  background-color: var(--brand-field);
+}
+.dropzone.is-invalid {
+  border-color: var(--bs-danger);
+}
+
+.dropzone-icon {
+  width: 3rem;
+  height: 3rem;
+  background-color: #dbe4f0;
+  color: var(--brand);
+}
+
+#image:focus-visible + .dropzone-feedback {
+  outline: none;
+}
