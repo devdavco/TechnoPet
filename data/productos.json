@@ -1,0 +1,82 @@
+[
+    {
+    "id": 1,
+    "nombre": "Comedero Inteligente Pro",
+    "categoria": "Alimentación",
+    "precio": 284.800,
+    "stock": 42,
+    "estado": "En stock"
+    },
+    {
+    "id": 2,
+    "nombre": "Collar GPS GeoTrack",
+    "categoria": "Vigilancia y monitoreo",
+    "precio": 188.800,
+    "stock": 0,
+    "estado": "Stock bajo"
+    },
+    {
+    "id": 3,
+    "nombre": "Fuente PureFlow IoT",
+    "categoria": "Alimentación",
+    "precio": 144.000,
+    "stock": 65,
+    "estado": "En stock"
+    },
+    {
+    "id": 4,
+    "nombre": "Cámara PetCam 360",
+    "categoria": "Vigilancia y monitoreo",
+    "precio": 252.800,
+    "stock": 19,
+    "estado": "En stock"
+    },
+    {
+    "id": 5,
+    "nombre": "Monitor de Salud PetBand",
+    "categoria": "Higiene y salud",
+    "precio": 124.800,
+    "stock": 0,
+    "estado": "Agotado"
+    },
+    {
+    "id": 6,
+    "nombre": "Rascador Interactivo Smart",
+    "categoria": "Juguetes y entretenimiento",
+    "precio": 110.400,
+    "stock": 15,
+    "estado": "En stock"
+    },
+    {
+    "id": 7,
+    "nombre": "Juguete Laser Automatizado",
+    "categoria": "Juguetes y entretenimiento",
+    "precio": 79.968,
+    "stock": 8,
+    "estado": "Stock bajo"
+    },
+    {
+    "id": 8,
+    "nombre": "Bebedero Térmico IoT",
+    "categoria": "Alimentación",
+    "precio": 159.968,
+    "stock": 25,
+    "estado": "En stock"
+    },
+    {
+    "id": 9,
+    "nombre": "Puerta Inteligente RFID",
+    "categoria": "Vigilancia y monitoreo",
+    "precio": 380.800,
+    "stock": 5,
+    "estado": "Stock bajo"
+    },
+    {
+    "id": 10,
+    "nombre": "Cama Climatizada Smart",
+    "categoria": "Higiene y salud",
+    "precio": 304.000,
+    "stock": 12,
+    "estado": "En stock"
+    }
+]
