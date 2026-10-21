@@ -15,7 +15,7 @@ const contentForm = {
       placeholder: "Selecciona una categoría",
     },
     price: {
-      title: "Precio ($ USD)",
+      title: "Precio ($ COP)",
       placeholder: "89.00",
     },
     quantity: {
