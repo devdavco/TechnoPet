@@ -15,8 +15,8 @@ const contentForm = {
       placeholder: "Selecciona una categoría",
     },
     price: {
-      title: "Precio (COP)",
-      placeholder: "150000",
+      title: "Precio ($ COP)",
+      placeholder: "89.00",
     },
     quantity: {
       title: "Cantidad / Stock",
@@ -29,7 +29,7 @@ const contentForm = {
     },
     image: {
       title: "Imagen del producto",
-      placeholder: "PNG, JPG o WebP",
+      placeholder: "PNG, JPG o WebP (Hasta 5MB)",
     },
   },
 };

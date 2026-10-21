@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+import { saveProduct, getProducts } from "../../../services/api_products.js";
+
+>>>>>>> c651fb82854158b8f2af7a6314404522abe88b54
 const rules = {
   name: { min: 3, required: true },
   description: { min: 15, required: false },
@@ -6,6 +11,10 @@ const rules = {
 // Solo validamos el formato; el tamaño lo ajusta fileToDataURL antes de guardar
 const IMAGE = {
   types: ["image/png", "image/jpeg", "image/webp"],
+<<<<<<< HEAD
+=======
+  maxSize: 5 * 1024 * 1024, // 5MB
+>>>>>>> c651fb82854158b8f2af7a6314404522abe88b54
 };
 
 // Redimensiona y comprime la imagen para que quepa en localStorage
@@ -36,13 +45,27 @@ const validateImage = (input) => {
   let error = "";
 
   // La imagen es opcional
+<<<<<<< HEAD
   if (file && !IMAGE.types.includes(file.type)) {
     error = "Formato no permitido. Usa PNG, JPG o WebP.";
+=======
+  if (file) {
+    if (!IMAGE.types.includes(file.type)) {
+      error = "Formato no permitido. Usa PNG, JPG o WebP.";
+    } else if (file.size > IMAGE.maxSize) {
+      error = "La imagen supera los 5MB.";
+    }
+>>>>>>> c651fb82854158b8f2af7a6314404522abe88b54
   }
 
   input.setCustomValidity(error);
   feedback.textContent = error;
   zone.classList.toggle("is-invalid", Boolean(error));
+};
+
+const getNextId = () => {
+  const products = getProducts();
+  return products.length ? Math.max(...products.map((p) => p.id)) + 1 : 1;
 };
 
 export const validateProductForm = async (e) => {
@@ -74,6 +97,10 @@ export const validateProductForm = async (e) => {
 
   // Misma estructura que data/productos.json. Sin id: lo genera main.js con generateId
   const product = {
+<<<<<<< HEAD
+=======
+    id: getNextId(),
+>>>>>>> c651fb82854158b8f2af7a6314404522abe88b54
     name: formData.name.trim(),
     price: Number(formData.price),
     currency_price: "$",
