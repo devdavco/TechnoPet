@@ -1,3 +1,5 @@
+import { saveProduct } from "../../../services/api_products.js";
+
 const rules = {
   name: { min: 3, required: true },
   description: { min: 15, required: false },
@@ -18,6 +20,27 @@ const getImageSize = (file) =>
       URL.revokeObjectURL(url);
       resolve({ width: img.width, height: img.height });
     };
+    img.onerror = reject;
+    img.src = url;
+  });
+
+// Redimensiona y comprime la imagen para que quepa en localStorage
+const fileToDataURL = (file, maxSize = 800) =>
+  new Promise((resolve, reject) => {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+
+    img.onload = () => {
+      const scale = Math.min(1, maxSize / Math.max(img.width, img.height));
+      const canvas = document.createElement("canvas");
+      canvas.width = Math.round(img.width * scale);
+      canvas.height = Math.round(img.height * scale);
+      canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
+
+      URL.revokeObjectURL(url);
+      resolve(canvas.toDataURL("image/jpeg", 0.8));
+    };
+
     img.onerror = reject;
     img.src = url;
   });
@@ -75,8 +98,24 @@ export const validateProductForm = async (e) => {
 
   if (!form.checkValidity()) return;
 
-  const data = Object.fromEntries(new FormData(form));
-  console.log("Producto válido:", data);
+  const formData = Object.fromEntries(new FormData(form));
+  const file = form.elements.image.files[0];
+
+  const product = {
+    id: 1,
+    name: formData.name.trim(),
+    category: Number(formData.category),
+    price: Number(formData.price),
+    stock: Number(formData.stock),
+    description: formData.description.trim(),
+    image: file ? await fileToDataURL(file) : null,
+    createdAt: new Date().toISOString(),
+  };
+
+  if (!saveProduct(product)) {
+    alert("No hay espacio suficiente para guardar el producto.");
+    return;
+  }
 
   form.reset();
   form.classList.remove("was-validated");

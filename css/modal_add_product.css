@@ -1,5 +1,7 @@
-.product-modal {
+:root {
   --brand: #2b6a5f;
+  --brand-hover: #235a50;
+  --brand-active: #1e4d44;
   --brand-soft: #eef4ff;
   --brand-field: #ebf2fe;
 }
@@ -8,15 +10,20 @@
   background-color: var(--brand-soft);
 }
 
-.btn-brand {
+.btn.btn-brand {
   --bs-btn-color: #fff;
   --bs-btn-bg: var(--brand);
   --bs-btn-border-color: var(--brand);
   --bs-btn-hover-color: #fff;
-  --bs-btn-hover-bg: #235a50;
-  --bs-btn-hover-border-color: #235a50;
-  --bs-btn-active-bg: #1e4d44;
-  --bs-btn-active-border-color: #1e4d44;
+  --bs-btn-hover-bg: var(--brand-hover);
+  --bs-btn-hover-border-color: var(--brand-hover);
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: var(--brand-active);
+  --bs-btn-active-border-color: var(--brand-active);
+  --bs-btn-focus-shadow-rgb: 43, 106, 95;
+}
+
+.badge.btn-brand {
   background-color: var(--brand);
   color: #fff;
 }
@@ -59,6 +66,6 @@
   color: var(--brand);
 }
 
-#image:focus-visible + .dropzone-feedback {
-  outline: none;
+.modal-footer > * {
+  margin: 0;
 }
