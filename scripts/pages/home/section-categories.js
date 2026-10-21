@@ -1,42 +1,30 @@
+const API_URL = "./data/categories.json"
+const getCategories = async () => {
+  try {
+      const response = await fetch(API_URL);
+      if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
+      const data = await response.json();
+      return data.categories;
+    } catch (error) {
+      console.error("No se pudieron cargar las categorías:", error);
+      return []
+    }
+}
 class SectionCategories extends HTMLElement {
-  connectedCallback() {
+  async connectedCallback() {
     const content = {
         title: "Explora la gama",
         subtitle: "Compra por categoría",
         textCategory: "Categorías principales"
     }
-    const categories = [
-      {
-        icon: "bi bi-egg-fried",
-        title: "Alimentación",
-        description: "Comederos & Fuentes automáticas",
-        href: "#"
-      },
-      {
-        icon: "bi bi-geo-alt",
-        title: "Seguridad y GPS",
-        description: "Rastreo sin límites y geocercas",
-        href: "#"
-      },
-      {
-        icon: "bi-camera-video",
-        title: "Monitoreo",
-        description: "Cámaras interactivas HD y audio",
-        href: "#"
-      },
-      {
-        icon: "bi-heart-pulse",
-        title: "Salud y bienestar",
-        description: "Telemetría vital y descanso",
-        href: "#"
-      }
-    ];
+
+    const categories = await getCategories()
 
     const cards = categories
       .map(
         (item) => `
           <div class="col-12 col-md-6 col-lg-3">
-            <a href="${item.href}" class="category-card d-block h-100">
+            <a href="${item.href ?? "#"}" class="category-card d-block h-100">
               <div class="d-flex justify-content-between align-items-start mb-4">
                 <div class="category-icon d-flex justify-content-center align-items-center fs-3 rounded-2">
                   <i class="${item.icon}" aria-hidden="true"></i>

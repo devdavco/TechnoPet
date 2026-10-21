@@ -1,0 +1,28 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "title": "Juguetes y entretenimiento",
+      "description": "Juguetes interactivos, mordedores, pelotas y peluches para entretener, estimular y ejercitar a tu mascota.",
+      "icon": "bi bi-joystick"
+    },
+    {
+      "id": 2,
+      "title": "Alimentación",
+      "description": "Comida, snacks, comederos, bebederos y dispensadores automáticos para una nutrición completa y práctica.",
+      "icon": "bi bi-egg-fried"
+    },
+    {
+      "id": 3,
+      "title": "Vigilancia y monitoreo",
+      "description": "Cámaras, collares GPS y dispositivos inteligentes para saber dónde está y cómo se encuentra tu mascota en todo momento.",
+      "icon": "bi bi-geo-alt"
+    },
+    {
+      "id": 4,
+      "title": "Higiene y salud",
+      "description": "Productos de limpieza, cuidado del pelaje, antiparasitarios y suplementos para mantener a tu mascota sana y limpia.",
+      "icon": "bi-heart-pulse"
+    }
+  ]
+}
