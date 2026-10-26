@@ -29,23 +29,15 @@
     <!-- HEADER -->
     <div id="header-component"></div>
     <catalog-search></catalog-search>
-    <main class="container flex-grow-1">
-      <catalog-header></catalog-header>
-      <product-list id="listado-productos"></product-list>
-      <catalog-pagination></catalog-pagination>
-    </main>
 
     <!-- MAIN CONTENT -->
-    <main class="container my-4 flex-grow-1">
-      <div class="mb-4">
-        <h1 class="fw-bold mb-1">Catálogo de productos</h1>
-        <p class="text-secondary small">
-          Encuentra tecnología para la alimentación, seguridad y bienestar de tu mascota con sincronización IoT en tiempo real.
-        </p>
-      </div>
+    <main class="container flex-grow-1">
+      <catalog-header></catalog-header>
 
       <!-- CONTENEDOR DE PRODUCTOS -->
       <div class="row g-3" id="catalog-container"></div>
+
+      <catalog-pagination></catalog-pagination>
     </main>
 
     <!-- FOOTER -->
@@ -64,10 +56,8 @@
     <script src="./scripts/pages/products/catalog-state.js" defer></script>
     <script src="./scripts/pages/products/catalog-search.js" defer></script>
     <script src="./scripts/pages/products/catalog-header.js" defer></script>
-    <script src="./scripts/pages/products/product-list-temp.js" defer></script>
     <script src="./scripts/pages/products/catalog-pagination.js" defer></script>
 
-    <!-- BOOTSTRAP JAVASCRIPT -->
     <!-- BOOTSTRAP JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   </body>
