@@ -42,7 +42,7 @@ class CatalogPagination extends HTMLElement {
         actualizarCatalogo();
 
         // Volvemos al inicio del listado
-        document.getElementById("listado-productos").scrollIntoView({ behavior: "smooth" });
+        document.getElementById("catalog-container").scrollIntoView({ behavior: "smooth" });
       });
     });
   }

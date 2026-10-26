@@ -3,14 +3,14 @@
 // Pasa el texto a minúsculas, quita las tildes y los espacios de los extremos.
 // Ejemplo: "  Cámara " -> "camara"
 function normalizarTexto(texto) {
-  return texto
+  return String(texto || "")
     .toLowerCase()
     .normalize("NFD")
     .replace(/[̀-ͯ]/g, "")
     .trim();
 }
 
-// Devuelve los productos cuyo nombre o descripción contienen el texto
+// Devuelve los productos cuyo nombre, categoría o descripción contienen el texto
 function buscarProductos(productos, texto) {
   const textoBuscado = normalizarTexto(texto);
 
@@ -22,6 +22,7 @@ function buscarProductos(productos, texto) {
   return productos.filter(function (producto) {
     return (
       normalizarTexto(producto.name).includes(textoBuscado) ||
+      normalizarTexto(producto.category).includes(textoBuscado) ||
       normalizarTexto(producto.description).includes(textoBuscado)
     );
   });
