@@ -1,0 +1,36 @@
+/* HU-03 Paginación del catálogo */
+
+catalog-pagination {
+  display: block;
+}
+
+.catalog-pagination-text {
+  text-align: center;
+  color: var(--bs-secondary-color);
+}
+
+/* Botones cuadrados con borde */
+.catalog-page-button {
+  min-width: 40px;
+  height: 40px;
+  padding: 0 0.75rem;
+  border: 1px solid var(--bs-border-color);
+  border-radius: 0.25rem;
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+}
+
+.catalog-page-button:hover:not(:disabled) {
+  border-color: var(--color-text-primary);
+}
+
+/* Página actual con fondo gris */
+.catalog-page-button.active {
+  background-color: var(--bs-secondary-bg);
+  font-weight: 700;
+}
+
+.catalog-page-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

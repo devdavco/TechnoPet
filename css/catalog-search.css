@@ -1,0 +1,51 @@
+/* HU-01 Barra de búsqueda del catálogo */
+
+catalog-search {
+  display: block;
+}
+
+/* Barra gris clara debajo del header */
+.catalog-search-bar {
+  background-color: var(--bs-secondary-bg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.catalog-search-form {
+  max-width: 560px;
+}
+
+.catalog-search-input {
+  flex-grow: 1;
+  min-width: 0;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--bs-border-color);
+  border-radius: 0.375rem 0 0 0.375rem;
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+}
+
+.catalog-search-input:focus {
+  outline: 2px solid var(--color-accent);
+  outline-offset: -1px;
+}
+
+/* Botón de texto */
+.catalog-search-button {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--bs-border-color);
+  border-left: 0;
+  border-radius: 0 0.375rem 0.375rem 0;
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  font-weight: 600;
+}
+
+.catalog-search-button:hover {
+  color: var(--color-link);
+  text-decoration: underline;
+}
+
+.catalog-search-text {
+  color: var(--bs-secondary-color);
+  white-space: nowrap;
+}
