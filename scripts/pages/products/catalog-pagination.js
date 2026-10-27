@@ -1,3 +1,4 @@
+import {PRODUCTOS_POR_PAGINA, pagina, cambiarPagina} from "./catalog-state.js"
 // HU-03 Paginación del catálogo
 class CatalogPagination extends HTMLElement {
   dibujar(total) {
@@ -38,8 +39,7 @@ class CatalogPagination extends HTMLElement {
     const botones = this.querySelectorAll("button");
     botones.forEach(function (boton) {
       boton.addEventListener("click", function () {
-        pagina = Number(boton.dataset.pagina);
-        actualizarCatalogo();
+        cambiarPagina(Number(boton.dataset.pagina));
 
         // Volvemos al inicio del listado
         document.getElementById("catalog-container").scrollIntoView({ behavior: "smooth" });
@@ -51,6 +51,6 @@ class CatalogPagination extends HTMLElement {
 customElements.define("catalog-pagination", CatalogPagination);
 
 // La llama actualizarCatalogo() cada vez que cambia la lista
-function dibujarPaginacion(total) {
+export function dibujarPaginacion(total) {
   document.querySelector("catalog-pagination").dibujar(total);
 }

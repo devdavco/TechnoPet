@@ -1,5 +1,4 @@
-
-function createProductCard(product) {
+export function createProductCard(product, colClass = "col-sm-6 col-md-4") {
     const productImage = product.image || "";
     const currency = product.currency_price || "$";
     const price = Number(product.price || 0).toLocaleString("es-CO", { minimumFractionDigits: 0 });
@@ -10,7 +9,7 @@ function createProductCard(product) {
     const stockClass = stockAvailable ? "text-success" : "text-danger";
 
     return `
-    <div class="col-sm-6 col-md-4 mb-4">
+    <div class="${colClass} mb-4">
         <div class="card h-100 border shadow-sm rounded-0 bg-white">
         
         <!-- Imagen del producto -->
