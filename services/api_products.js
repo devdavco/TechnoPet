@@ -17,7 +17,7 @@ async function cargarListaProductos() {
   return await respuesta.json();
 }
 
-async function obtenerProductos() {
+export async function obtenerProductos() {
   try {
     const respuestaCategorias = await fetch(API_CATEGORIAS);
     if (!respuestaCategorias.ok) throw new Error(`Error HTTP: ${respuestaCategorias.status}`);

@@ -1,3 +1,5 @@
+import {buscarEnCatalogo} from "./catalog-state.js"
+
 // HU-01 Barra de búsqueda del catálogo
 
 // Pasa el texto a minúsculas, quita las tildes y los espacios de los extremos.
@@ -11,7 +13,7 @@ function normalizarTexto(texto) {
 }
 
 // Devuelve los productos cuyo nombre, categoría o descripción contienen el texto
-function buscarProductos(productos, texto) {
+export function buscarProductos(productos, texto) {
   const textoBuscado = normalizarTexto(texto);
 
   // Si el campo está vacío, se muestran todos
@@ -58,15 +60,13 @@ class CatalogSearch extends HTMLElement {
     const textoUrl = parametros.get("q");
     if (textoUrl) {
       input.value = textoUrl;
-      busqueda = textoUrl;
+      buscarEnCatalogo(textoUrl);
     }
 
     // Buscar al hacer clic en "Buscar" o al presionar Enter
     formulario.addEventListener("submit", function (evento) {
       evento.preventDefault();
-      busqueda = input.value;
-      pagina = 1;
-      actualizarCatalogo();
+      buscarEnCatalogo(input.value);
     });
   }
 }

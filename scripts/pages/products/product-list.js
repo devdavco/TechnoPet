@@ -1,6 +1,8 @@
+import { createProductCard } from "./product-card.js";
+
 // Dibuja las tarjetas de los productos de la página actual.
 // La llama actualizarCatalogo() (catalog-state.js) después de buscar y paginar.
-function dibujarProductos(products) {
+export function dibujarProductos(products) {
   const catalogContainer = document.getElementById("catalog-container");
 
   if (!catalogContainer) return;

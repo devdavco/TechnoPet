@@ -1,0 +1,36 @@
+:root {
+  --brand: #2b6a5f;
+  --brand-hover: #235a50;
+  --brand-active: #1e4d44;
+  --brand-soft: #eef4ff;
+  --brand-field: #ebf2fe;
+  --second-brand: #06B2AC;
+}
+
+.form-circle {
+    height: 10px;
+    width: 10px;
+    background-color:  var(--second-brand);
+}
+
+
+/* Filters */
+filters-component {
+  --brand: #1f3d3a;
+  --accent: #4fb3a5;
+}
+
+filters-component .form-check-input:checked {
+  background-color: var(--brand);
+  border-color: var(--brand);
+}
+
+filters-component .form-range::-webkit-slider-thumb { background-color: var(--accent); }
+filters-component .form-range::-moz-range-thumb     { background-color: var(--accent); }
+
+filters-component .btn-dark {
+  --bs-btn-bg: var(--brand);
+  --bs-btn-border-color: var(--brand);
+  --bs-btn-hover-bg: #162c2a;
+  --bs-btn-hover-border-color: #162c2a;
+}

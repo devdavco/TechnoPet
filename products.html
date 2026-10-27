@@ -1,64 +1,88 @@
 <!doctype html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Techno Pet - Catálogo</title>
-    <!-- FAVICON -->
-    <link rel="icon" href="./assets/favicon/favicon.ico" sizes="any" />
-    <link rel="icon" href="./assets/favicon/favicon.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="./assets/favicon/apple-touch-icon.png" />
-    <link rel="stylesheet" href="./css/style.css" />
 
-    <!-- BOOTSTRAP 5 -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <!-- BOOTSTRAP ICONS -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-    />
-    <!-- CATÁLOGO -->
-    <link rel="stylesheet" href="./css/catalog-search.css" />
-    <link rel="stylesheet" href="./css/catalog-header.css" />
-    <link rel="stylesheet" href="./css/catalog-pagination.css" />
-  </head>
-  <body class="d-flex flex-column min-vh-100 bg-white">
-    <!-- HEADER -->
-    <div id="header-component"></div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Techno Pet - Catálogo</title>
+  <!-- FAVICON -->
+  <link rel="icon" href="./assets/favicon/favicon.ico" sizes="any" />
+  <link rel="icon" href="./assets/favicon/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="./assets/favicon/apple-touch-icon.png" />
+  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="./css/page_products.css" />
+
+  <!-- BOOTSTRAP 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- BOOTSTRAP ICONS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <!-- CATÁLOGO -->
+  <link rel="stylesheet" href="./css/catalog-search.css" />
+  <link rel="stylesheet" href="./css/catalog-header.css" />
+  <link rel="stylesheet" href="./css/catalog-pagination.css" />
+</head>
+
+<body class="d-flex flex-column min-vh-100 bg-white">
+  <!-- HEADER -->
+  <div id="header-component"></div>
+  <main class="container py-5">
+
     <catalog-search></catalog-search>
+    <catalog-header></catalog-header>
 
-    <!-- MAIN CONTENT -->
-    <main class="container flex-grow-1">
-      <catalog-header></catalog-header>
+    <div class="row">
+      <div class="col-12 col-lg-3">
 
-      <!-- CONTENEDOR DE PRODUCTOS -->
-      <div class="row g-3" id="catalog-container"></div>
+        <!-- Botón solo visible en móvil -->
+        <button class="btn btn-outline-dark w-100 mb-3 d-lg-none" type="button" data-bs-toggle="offcanvas"
+          data-bs-target="#filtersOffcanvas" aria-controls="filtersOffcanvas">
+          <i class="bi bi-funnel me-1"></i> Filtros
+        </button>
 
-      <catalog-pagination></catalog-pagination>
-    </main>
+        <!-- Sidebar en desktop -->
+        <div class="offcanvas-lg offcanvas-start" tabindex="-1" id="filtersOffcanvas" aria-label="Filtros">
+          <div class="offcanvas-header justify-content-end">
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#filtersOffcanvas" aria-label="Cerrar"></button>
+          </div>
+          <div class="offcanvas-body">
+            <filters-component></filters-component>
+          </div>
+        </div>
 
-    <!-- FOOTER -->
-    <div id="footer-component"></div>
+      </div>
 
-    <!-- SCRIPTS EN ORDEN CORRECTO -->
-    <script src="./scripts/logo/logo-full.js"></script>
-    <script src="./scripts/components.js"></script>
+      <div class="col-12 col-lg-9">
+        <order-component></order-component>
+        <div class="row g-3" id="catalog-container"></div>
+        <catalog-pagination></catalog-pagination>
+      </div>
+    </div>
+  </main>
 
-    <!-- CARGA DIRECTA DE COMPONENTES DE PRODUCTOS (SIN DEFER) -->
-    <script src="./scripts/pages/products/product-card.js"></script>
-    <script src="./scripts/pages/products/product-list.js"></script>
 
-    <!-- CATÁLOGO -->
-    <script src="./services/api_products.js" defer></script>
-    <script src="./scripts/pages/products/catalog-state.js" defer></script>
-    <script src="./scripts/pages/products/catalog-search.js" defer></script>
-    <script src="./scripts/pages/products/catalog-header.js" defer></script>
-    <script src="./scripts/pages/products/catalog-pagination.js" defer></script>
+  <!-- FOOTER -->
+  <div id="footer-component"></div>
 
-    <!-- BOOTSTRAP JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  </body>
+  <!-- SCRIPTS EN ORDEN CORRECTO -->
+  <script src="./scripts/logo/logo-full.js"></script>
+  <script src="./scripts/components.js"></script>
+
+  <!-- COMPONENTS -->
+  <script type="module" src="./scripts/pages/products/filters-component.js" defer></script>
+  <script src="./scripts/pages/products/order-component.js" defer></script>
+  <!-- CARGA DIRECTA DE COMPONENTES DE PRODUCTOS (SIN DEFER) -->
+  <script type="module" src="./scripts/pages/products/product-card.js"></script>
+  <script type="module" src="./scripts/pages/products/product-list.js"></script>
+
+  <!-- CATÁLOGO -->
+  <script type="module" src="./services/api_products.js" defer></script>
+  <script type="module" src="./scripts/pages/products/catalog-state.js" defer></script>
+  <script type="module" src="./scripts/pages/products/catalog-search.js" defer></script>
+  <script src="./scripts/pages/products/catalog-header.js" defer></script>
+  <script type="module" src="./scripts/pages/products/catalog-pagination.js" defer></script>
+
+  <!-- BOOTSTRAP JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
 </html>
