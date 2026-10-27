@@ -21,7 +21,7 @@ class OrderComponent extends HTMLElement {
     }
     
     this.innerHTML = `
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 pb-5">
         <div class="d-flex align-items-center gap-2">
             <div class="rounded-pill form-circle flex-shrink-0"></div>
             <p class="m-0">Mostrando <span class="fw-bold">1–10</span> de <span class="fw-bold">${pagination.total}</span> productos</p>

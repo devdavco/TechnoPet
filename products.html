@@ -29,17 +29,31 @@
 
     <catalog-search></catalog-search>
     <catalog-header></catalog-header>
-    
+
     <div class="row">
-      <div class="col-3">
-        <filters-component></filters-component>
+      <div class="col-12 col-lg-3">
+
+        <!-- Botón solo visible en móvil -->
+        <button class="btn btn-outline-dark w-100 mb-3 d-lg-none" type="button" data-bs-toggle="offcanvas"
+          data-bs-target="#filtersOffcanvas" aria-controls="filtersOffcanvas">
+          <i class="bi bi-funnel me-1"></i> Filtros
+        </button>
+
+        <!-- Sidebar en desktop -->
+        <div class="offcanvas-lg offcanvas-start" tabindex="-1" id="filtersOffcanvas" aria-label="Filtros">
+          <div class="offcanvas-header justify-content-end">
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#filtersOffcanvas" aria-label="Cerrar"></button>
+          </div>
+          <div class="offcanvas-body">
+            <filters-component></filters-component>
+          </div>
+        </div>
+
       </div>
-      <div class="col-9">
 
+      <div class="col-12 col-lg-9">
         <order-component></order-component>
-        <!-- CONTENEDOR DE PRODUCTOS -->
         <div class="row g-3" id="catalog-container"></div>
-
         <catalog-pagination></catalog-pagination>
       </div>
     </div>
