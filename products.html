@@ -25,9 +25,9 @@
 <body class="d-flex flex-column min-vh-100 bg-white">
   <!-- HEADER -->
   <div id="header-component"></div>
-  <main class="container py-5">
+  <catalog-search></catalog-search>
 
-    <catalog-search></catalog-search>
+  <main class="container pb-5">
     <catalog-header></catalog-header>
 
     <div class="row">
@@ -69,8 +69,8 @@
 
   <!-- COMPONENTS -->
   <script type="module" src="./scripts/pages/products/filters-component.js" defer></script>
-  <script src="./scripts/pages/products/order-component.js" defer></script>
-  <!-- CARGA DIRECTA DE COMPONENTES DE PRODUCTOS (SIN DEFER) -->
+  <script type="module" src="./scripts/pages/products/order-component.js"></script>
+  <!-- COMPONENTES DE PRODUCTOS -->
   <script type="module" src="./scripts/pages/products/product-card.js"></script>
   <script type="module" src="./scripts/pages/products/product-list.js"></script>
 

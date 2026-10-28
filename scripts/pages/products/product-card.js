@@ -16,7 +16,7 @@ export function createProductCard(product, colClass = "col-sm-6 col-md-4") {
         <div class="bg-light border-bottom d-flex align-items-center justify-content-center p-3 position-relative" style="height: 190px;">
             ${
             productImage
-                ? `<img src="${productImage}" class="w-100 h-100 object-fit-contain" alt="${product.name}" onerror="this.src='./assets/images/default-product.jpg'" />`
+                ? `<img src="${productImage}" class="w-100 h-100 object-fit-contain" alt="${product.name}" onerror="this.onerror=null; this.src='./assets/favicon/favicon.svg'" />`
                     : `<div class="text-secondary small text-center w-100 h-100 d-flex align-items-center justify-content-center border-dashed">
                     <span>Imagen no disponible</span>
                     </div>`
@@ -41,7 +41,7 @@ export function createProductCard(product, colClass = "col-sm-6 col-md-4") {
             </div>
 
             <!-- Botón Añadir al carrito -->
-            <button class="btn btn-dark w-100 rounded-0 py-2 fw-semibold add-to-cart-btn" data-id="${product.id || ''}">
+            <button class="btn btn-customer w-100 rounded-0 py-2 fw-semibold add-to-cart-btn" data-id="${product.id || ''}">
             <i class="bi bi-cart-plus me-2"></i>Añadir al carrito
             </button>
         </div>
