@@ -41,7 +41,7 @@ export function createProductCard(product, colClass = "col-sm-6 col-md-4") {
             </div>
 
             <!-- Botón Añadir al carrito -->
-            <button class="btn btn-customer w-100 rounded-0 py-2 fw-semibold add-to-cart-btn" data-id="${product.id || ''}">
+            <button class="btn btn-customer w-100 rounded-0 py-2 fw-semibold add-to-cart-btn" data-id="${product.id || ''}" data-stock="${Number(product.quantity) || 0}" ${stockAvailable ? "" : "disabled"}>
             <i class="bi bi-cart-plus me-2"></i>Añadir al carrito
             </button>
         </div>
