@@ -21,7 +21,10 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav ms-lg-auto align-items-lg-center gap-lg-4">
             <li class="nav-item">
-              <a class="nav-link" href="./products.html">Catalogo</a>
+              <cart-button></cart-button>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./products.html">Catálogo</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="./about.html">Nosotros</a>
@@ -30,13 +33,13 @@
               <a class="nav-link" href="./contact.html">Contacto</a>
             </li>
             <li class="nav-item mt-2 mt-lg-0">
-              <a class="btn btn-dark w-100 w-lg-auto" href="./login.html">
-                Login/Registro
-              </a>
+              <session-menu></session-menu>
             </li>
           </ul>
         </div>
       </div>
     </nav>
   </div>
+  <!-- Panel del carrito (se abre desde <cart-button>) -->
+  <cart-panel></cart-panel>
 </header>

@@ -20,14 +20,16 @@
   <link rel="stylesheet" href="./css/catalog-search.css" />
   <link rel="stylesheet" href="./css/catalog-header.css" />
   <link rel="stylesheet" href="./css/catalog-pagination.css" />
+  <!-- CARRITO -->
+  <link rel="stylesheet" href="./css/cart.css" />
 </head>
 
 <body class="d-flex flex-column min-vh-100 bg-white">
   <!-- HEADER -->
   <div id="header-component"></div>
-  <main class="container py-5">
+  <catalog-search></catalog-search>
 
-    <catalog-search></catalog-search>
+  <main class="container pb-5">
     <catalog-header></catalog-header>
 
     <div class="row">
@@ -66,11 +68,16 @@
   <!-- SCRIPTS EN ORDEN CORRECTO -->
   <script src="./scripts/logo/logo-full.js"></script>
   <script src="./scripts/components.js"></script>
+  <!-- CARRITO -->
+  <script type="module" src="./scripts/cart/cart-button.js"></script>
+  <script type="module" src="./scripts/cart/cart-panel.js"></script>
+  <!-- SESIÓN -->
+  <script type="module" src="./scripts/auth/session-menu.js"></script>
 
   <!-- COMPONENTS -->
   <script type="module" src="./scripts/pages/products/filters-component.js" defer></script>
-  <script src="./scripts/pages/products/order-component.js" defer></script>
-  <!-- CARGA DIRECTA DE COMPONENTES DE PRODUCTOS (SIN DEFER) -->
+  <script type="module" src="./scripts/pages/products/order-component.js"></script>
+  <!-- COMPONENTES DE PRODUCTOS -->
   <script type="module" src="./scripts/pages/products/product-card.js"></script>
   <script type="module" src="./scripts/pages/products/product-list.js"></script>
 

@@ -1,41 +1,32 @@
-<header class="bg-white border-bottom py-3 px-4 sticky-top">
-  <div class="container-fluid d-flex justify-content-between align-items-center">
-    
-    <!-- Título de la sección actual -->
+<header class="bg-white border-bottom py-3 sticky-top">
+  <div class="container d-flex flex-wrap justify-content-between align-items-center gap-3">
+    <!-- Logo y sección actual -->
     <div class="d-flex align-items-center gap-3">
-      <h4 class="mb-0 fw-bold text-dark">Dashboard</h4>
+      <a href="./index.html" aria-label="Ir al inicio de Techno Pet">
+        <logo-full></logo-full>
+      </a>
+      <span class="badge rounded-pill badge-container color-primary fw-semibold">Admin</span>
     </div>
 
-    <!-- Elementos derechos del Header (Búsqueda, Notificaciones y Perfil) -->
-    <div class="d-flex align-items-center gap-3">
-      
-      <!-- Buscador superior -->
-      <div class="input-group input-group-sm d-none d-md-flex" style="width: 250px;">
-        <span class="input-group-text bg-light border-end-0 text-muted">🔍</span>
-        <input type="search" class="form-control bg-light border-start-0 ps-0 shadow-none" placeholder="Buscar productos, pedidos...">
+    <!-- Buscador, ir a la tienda y cerrar sesión -->
+    <div class="d-flex flex-wrap align-items-center gap-2 admin-header-actions">
+      <!-- Lo usa main.js para filtrar la lista de productos -->
+      <div class="input-group input-group-sm admin-search">
+        <span class="input-group-text bg-light text-secondary">
+          <i class="bi bi-search" aria-hidden="true"></i>
+        </span>
+        <input
+          type="search"
+          id="admin-search"
+          class="form-control bg-light"
+          placeholder="Buscar productos..."
+          aria-label="Buscar productos"
+        />
       </div>
-
-      <!-- Icono de Notificaciones -->
-      <button class="btn btn-light rounded-circle p-2 d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;" title="Notificaciones">
-        🔔
-      </button>
-
-      <!-- Menú de Usuario / Perfil -->
-      <div class="dropdown">
-        <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle text-dark gap-2" data-bs-toggle="dropdown" aria-expanded="false">
-          <div class="rounded-circle bg-secondary text-white d-flex justify-content-center align-items-center" style="width: 35px; height: 35px; font-size: 0.9rem;">
-            👤
-          </div>
-          <span class="fw-semibold d-none d-sm-inline">Admin</span>
-        </a>
-        <ul class="dropdown-menu dropdown-menu-end shadow border-0">
-          <li><a class="dropdown-item py-2" href="#">Mi Perfil</a></li>
-          <li><a class="dropdown-item py-2" href="#">Configuración</a></li>
-          <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item py-2 text-danger" href="index.html">Cerrar Sesión</a></li>
-        </ul>
-      </div>
-
+      <a href="./index.html" class="btn btn-outline-dark btn-sm">
+        <i class="bi bi-shop me-1" aria-hidden="true"></i>Ver tienda
+      </a>
+      <session-menu modo="admin"></session-menu>
     </div>
   </div>
 </header>

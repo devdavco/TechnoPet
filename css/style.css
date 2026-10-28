@@ -212,3 +212,22 @@ body {
 
 .link-arrow i { transition: transform 0.25s ease; }
 .link-arrow:hover i { transform: translateX(4px); }
+
+/* Admin: buscador del header */
+.admin-header-actions {
+  width: 100%;
+}
+
+.admin-search {
+  flex: 1 1 100%;
+}
+
+@media (min-width: 768px) {
+  .admin-header-actions {
+    width: auto;
+  }
+
+  .admin-search {
+    flex: 0 0 250px;
+  }
+}

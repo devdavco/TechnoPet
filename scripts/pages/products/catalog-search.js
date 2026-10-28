@@ -1,4 +1,4 @@
-import {buscarEnCatalogo} from "./catalog-state.js"
+import { buscarEnCatalogo } from "./catalog-state.js";
 
 // HU-01 Barra de búsqueda del catálogo
 
@@ -8,7 +8,7 @@ function normalizarTexto(texto) {
   return String(texto || "")
     .toLowerCase()
     .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
+    .replace(/[\u0300-\u036f]/g, "")
     .trim();
 }
 
@@ -55,12 +55,11 @@ class CatalogSearch extends HTMLElement {
     const formulario = this.querySelector("form");
     const input = this.querySelector("input");
 
-    // Si la URL trae ?q=texto, empezamos con esa búsqueda
-    const parametros = new URLSearchParams(window.location.search);
-    const textoUrl = parametros.get("q");
+    // Si la URL trae ?q=texto, lo mostramos en el campo
+    // (la búsqueda la aplica catalog-state.js cuando terminan de cargar los productos)
+    const textoUrl = new URLSearchParams(window.location.search).get("q");
     if (textoUrl) {
       input.value = textoUrl;
-      buscarEnCatalogo(textoUrl);
     }
 
     // Buscar al hacer clic en "Buscar" o al presionar Enter

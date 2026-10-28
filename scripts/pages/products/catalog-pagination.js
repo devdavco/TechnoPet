@@ -1,37 +1,31 @@
-import {PRODUCTOS_POR_PAGINA, pagina, cambiarPagina} from "./catalog-state.js"
+import { PRODUCTOS_POR_PAGINA, pagina, cambiarPagina } from "./catalog-state.js";
+
 // HU-03 Paginación del catálogo
 class CatalogPagination extends HTMLElement {
   dibujar(total) {
-    // Sin productos no se muestra nada
-    if (total === 0) {
+    const totalPaginas = Math.ceil(total / PRODUCTOS_POR_PAGINA);
+
+    // Con una página o ninguna no se muestran los botones.
+    // El texto "Mostrando X–Y de Z" lo dibuja order-component.js, arriba de las tarjetas.
+    if (totalPaginas <= 1) {
       this.innerHTML = "";
       return;
     }
 
-    const totalPaginas = Math.ceil(total / PRODUCTOS_POR_PAGINA);
+    let html = `<nav aria-label="Paginación del catálogo" class="d-flex justify-content-center flex-wrap gap-2">`;
 
-    // Texto "Mostrando X–Y de Z productos"
-    const desde = (pagina - 1) * PRODUCTOS_POR_PAGINA + 1;
-    const hasta = Math.min(pagina * PRODUCTOS_POR_PAGINA, total);
-    let html = `<p class="catalog-pagination-text mb-3">Mostrando ${desde}–${hasta} de ${total} productos</p>`;
+    html += `<button type="button" class="catalog-page-button" data-pagina="${pagina - 1}" ${pagina === 1 ? "disabled" : ""}>Anterior</button>`;
 
-    // Con más de una página mostramos los botones
-    if (totalPaginas > 1) {
-      html += `<nav aria-label="Paginación del catálogo" class="d-flex justify-content-center flex-wrap gap-2">`;
-
-      html += `<button type="button" class="catalog-page-button" data-pagina="${pagina - 1}" ${pagina === 1 ? "disabled" : ""}>Anterior</button>`;
-
-      for (let numero = 1; numero <= totalPaginas; numero++) {
-        if (numero === pagina) {
-          html += `<button type="button" class="catalog-page-button active" data-pagina="${numero}" aria-current="page">${numero}</button>`;
-        } else {
-          html += `<button type="button" class="catalog-page-button" data-pagina="${numero}">${numero}</button>`;
-        }
+    for (let numero = 1; numero <= totalPaginas; numero++) {
+      if (numero === pagina) {
+        html += `<button type="button" class="catalog-page-button active" data-pagina="${numero}" aria-current="page">${numero}</button>`;
+      } else {
+        html += `<button type="button" class="catalog-page-button" data-pagina="${numero}">${numero}</button>`;
       }
-
-      html += `<button type="button" class="catalog-page-button" data-pagina="${pagina + 1}" ${pagina === totalPaginas ? "disabled" : ""}>Siguiente</button>`;
-      html += `</nav>`;
     }
+
+    html += `<button type="button" class="catalog-page-button" data-pagina="${pagina + 1}" ${pagina === totalPaginas ? "disabled" : ""}>Siguiente</button>`;
+    html += `</nav>`;
 
     this.innerHTML = `<div class="catalog-pagination py-4">${html}</div>`;
 

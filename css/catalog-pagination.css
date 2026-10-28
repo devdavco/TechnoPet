@@ -4,11 +4,6 @@ catalog-pagination {
   display: block;
 }
 
-.catalog-pagination-text {
-  text-align: center;
-  color: var(--bs-secondary-color);
-}
-
 /* Botones cuadrados con borde */
 .catalog-page-button {
   min-width: 40px;

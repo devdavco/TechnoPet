@@ -187,10 +187,11 @@ function renderCards(products, categories) {
 }
 
 // Pinta la tabla, las tarjetas y el contador con la misma lista
-export function renderProducts(products, categories) {
+// products puede venir filtrada por el buscador; total es la cantidad de productos registrados
+export function renderProducts(products, categories, total) {
   renderTable(products, categories);
   renderCards(products, categories);
-  productsCount.textContent = products.length;
+  productsCount.textContent = total;
 }
 
 // Llena el <select> del formulario con las categorías del JSON

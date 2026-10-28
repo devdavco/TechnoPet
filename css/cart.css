@@ -1,0 +1,79 @@
+/* Carrito de compras: ícono del navbar, panel lateral y aviso */
+
+/* Ícono del navbar */
+.cart-button {
+  border: 0;
+  padding: 0.5rem;
+  color: var(--color-text-primary);
+}
+
+.cart-button:hover,
+.cart-button:focus-visible {
+  color: var(--color-brand-primary);
+}
+
+.cart-button .cart-count {
+  background-color: var(--color-brand-secondary);
+  color: var(--color-brand-primary);
+  font-size: 0.7rem;
+}
+
+/* Panel lateral */
+.cart-item-img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  border: 1px solid var(--color-border);
+  background-color: var(--bs-tertiary-bg);
+}
+
+.cart-qty-btn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--bs-border-color);
+  border-radius: 0.25rem;
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  line-height: 1;
+}
+
+.cart-qty-btn:hover:not(:disabled) {
+  border-color: var(--color-brand-primary);
+}
+
+.cart-qty-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.cart-qty {
+  min-width: 1.5rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.cart-empty-icon {
+  font-size: 3rem;
+  color: var(--color-brand-secondary);
+}
+
+/* Aviso "Agregado al carrito" */
+.cart-toast {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  z-index: 1100;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.5rem;
+  background-color: var(--color-brand-primary);
+  color: var(--color-text-inverse);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 1rem);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.cart-toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}

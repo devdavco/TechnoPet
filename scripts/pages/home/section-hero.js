@@ -46,9 +46,9 @@ class SectionHero extends HTMLElement {
             <h1 class="fs-1 fw-bold color-primary">${contentPage.title}</h1>
             <div class="pt-5">
               <p class="color-neutral-dark">${contentPage.description}</p>
-              <button class="btn btn-customer rounded-pill px-4">
+              <a href="./products.html" class="btn btn-customer rounded-pill px-4">
                 Explorar catálogo
-              </button>
+              </a>
             </div>
           </div>
         </div>
