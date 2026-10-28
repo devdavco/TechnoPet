@@ -16,7 +16,7 @@ const contentForm = {
     },
     price: {
       title: "Precio ($ COP)",
-      placeholder: "89.00",
+      placeholder: "150000",
     },
     quantity: {
       title: "Cantidad / Stock",

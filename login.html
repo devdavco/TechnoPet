@@ -63,6 +63,9 @@
             <p class="text-body-secondary mb-4">Bienvenido de nuevo a Techno Pet.</p>
 
             <form id="login-form" novalidate>
+              <div id="login-error" class="alert alert-danger d-none py-2 small" role="alert">
+                Correo o contraseña incorrectos.
+              </div>
               <div class="mb-3">
                 <label for="login-email" class="form-label fw-semibold small">
                   Correo electrónico *
@@ -105,8 +108,11 @@
                   <input class="form-check-input" type="checkbox" id="login-remember" name="remember" />
                   <label class="form-check-label" for="login-remember">Recordarme</label>
                 </div>
-                <a href="#" class="link-dark">¿Olvidaste tu contraseña?</a>
+                <a href="#" class="link-dark" id="forgot-password">¿Olvidaste tu contraseña?</a>
               </div>
+              <p id="forgot-message" class="d-none small text-secondary text-end mt-n3 mb-4" role="status">
+                Función disponible próximamente.
+              </p>
 
               <button type="submit" class="btn btn-dark w-100 fw-semibold">Iniciar sesión</button>
             </form>
@@ -131,9 +137,11 @@
     <!-- CARRITO -->
     <script type="module" src="./scripts/cart/cart-button.js"></script>
     <script type="module" src="./scripts/cart/cart-panel.js"></script>
+    <!-- SESIÓN -->
+    <script type="module" src="./scripts/auth/session-menu.js"></script>
 
     <!-- PAGE -->
-    <script src="./scripts/pages/login/login.js" defer></script>
+    <script type="module" src="./scripts/pages/login/login.js"></script>
 
     <!-- BOOTSTRAP JAVASCRIPT -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

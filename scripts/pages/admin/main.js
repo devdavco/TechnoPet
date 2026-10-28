@@ -1,7 +1,7 @@
 import { getProducts } from "./api.js";
 import { getCategories } from "../../../services/api_categories.js";
 import { getStoredProducts, saveProducts } from "./storage.js";
-import { isActive, findProductById, generateId } from "./utils.js";
+import { isActive, findProductById, generateId, filterProducts } from "./utils.js";
 import {
   renderProducts,
   renderCategoryOptions,
@@ -31,12 +31,15 @@ let categories = [];
 // Id del producto que se está editando o eliminando en el modal
 let editingId = null;
 
+// Texto del buscador del header (layouts/headerAdmin.html)
+let searchText = "";
+
 const NO_SPACE_MESSAGE = "No hay espacio suficiente para guardar el producto";
 
 // Pinta la lista y conecta los botones nuevos.
 // Se llama después de cada cambio, porque al pintar se crean botones nuevos.
 function renderAll() {
-  renderProducts(products, categories);
+  renderProducts(filterProducts(products, searchText, categories), categories, products.length);
 
   setupViewEvent(handleView);
   setupEditEvent(handleEdit);
@@ -203,5 +206,13 @@ async function init() {
   setupConfirmDeleteEvent(handleConfirmDelete);
   setupProductCreatedEvent(handleProductCreated);
 }
+
+// El buscador está en el header, que se carga después (components.js); por eso escuchamos en document
+document.addEventListener("input", (event) => {
+  if (event.target.id !== "admin-search") return;
+
+  searchText = event.target.value;
+  renderAll();
+});
 
 init();
