@@ -4,6 +4,8 @@ const LIST_ORDER = [
   { id: "recomendado", title: "Recomendado" },
   { id: "precio-desc", title: "Mayor precio" },
   { id: "precio-asc", title: "Menor precio" },
+  { id: "nombre-asc", title: "Nombre (A–Z)" },
+  { id: "nombre-desc", title: "Nombre (Z–A)" },
 ];
 
 // Devuelve una copia ordenada; "recomendado" deja el orden original.
@@ -12,6 +14,9 @@ export function ordenarProductos(products, order) {
   const sorted = products.slice();
   if (order === "precio-desc") sorted.sort((a, b) => Number(b.price) - Number(a.price));
   if (order === "precio-asc") sorted.sort((a, b) => Number(a.price) - Number(b.price));
+  if (order === "nombre-asc") sorted.sort((a, b) => a.name.localeCompare(b.name, "es", { sensitivity: "base" }));
+  if (order === "nombre-desc") sorted.sort((a, b) => b.name.localeCompare(a.name, "es", { sensitivity: "base" }));
+
   return sorted;
 }
 
