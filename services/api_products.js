@@ -49,3 +49,31 @@ export async function obtenerProductos() {
     return [];
   }
 }
+
+// Evento que avisa a la tienda que cambió el stock (por ejemplo, después de una compra)
+export const EVENTO_PRODUCTOS = "productos:actualizados";
+
+// Resta del stock las unidades compradas y guarda la lista para que admin la vea.
+// carrito: [{ id: "3", cantidad: 2 }, ...]. Devuelve true si se guardó.
+export async function descontarStock(carrito) {
+  try {
+    // Lista original (con productos ocultos y categorías como número), no la de obtenerProductos()
+    const lista = await cargarListaProductos();
+
+    carrito.forEach(function (item) {
+      const producto = lista.find(function (p) {
+        return String(p.id) === item.id;
+      });
+      if (producto) {
+        producto.quantity = Math.max(0, (Number(producto.quantity) || 0) - item.cantidad);
+      }
+    });
+
+    localStorage.setItem(CLAVE_PRODUCTOS_ADMIN, JSON.stringify(lista));
+    document.dispatchEvent(new CustomEvent(EVENTO_PRODUCTOS));
+    return true;
+  } catch (error) {
+    console.error("No se pudo actualizar el stock:", error);
+    return false;
+  }
+}
