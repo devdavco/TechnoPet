@@ -1,0 +1,102 @@
+[
+    {
+    "id": 1,
+    "name": "Comedero Inteligente Pro",
+    "price": 284800,
+    "currency_price": "$",
+    "description": "Dispensador automático de comida para perros antiobstrucciones de fácil configuración, cámara transparente HD de 1080P.",
+    "image": "https://i0.wp.com/cat-oh.com/wp-content/uploads/2026/01/Comedero-Automatico-Yumshare-Dual-Hopper-2-con-camara_Principal.webp",
+    "quantity": 42,
+    "category": 2
+    },
+    {
+    "id": 2,
+    "name": "Collar GPS GeoTrack",
+    "price": 188800,
+    "currency_price": "$",
+    "description": "Collar inteligente con geolocalización en tiempo real para mantener segura y vigilada a tu mascota.",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVP997UQz7eN6dJduU-h2cJG64be9ZjryueGLrueU5fLRC-jnFHQXf7vw&s=10",
+    "quantity": 0,
+    "category": 3
+    },
+    {
+    "id": 3,
+    "name": "Fuente PureFlow IoT",
+    "price": 144000,
+    "currency_price": "$",
+    "description": "Fuente de agua inteligente con sistema de filtrado avanzado y recordatorios de nivel de agua mediante IoT.",
+    "image": "https://http2.mlstatic.com/D_NQ_NP_820986-MCO110756844742_052026-O.webp",
+    "quantity": 65,
+    "category": 2
+    },
+    {
+    "id": 4,
+    "name": "Cámara PetCam 360",
+    "price": 252800,
+    "currency_price": "$",
+    "description": "Cámara de vigilancia con movimiento de 360 grados, visión nocturna y audio bidireccional para mascotas.",
+    "image": "https://media.falabella.com/sodimacCO/641689/public",
+    "quantity": 19,
+    "category": 3
+    },
+    {
+    "id": 5,
+    "name": "Monitor de Salud PetBand",
+    "price": 124800,
+    "currency_price": "$",
+    "description": "Banda inteligente para monitorear la actividad física, el sueño y constantes vitales de tu mascota.",
+    "image": "https://petpace.com/wp-content/uploads/2026/05/PetPace-Blog-Banner-53-768x432.png",
+    "quantity": 0,
+    "category": 4
+    },
+    {
+    "id": 6,
+    "name": "Rascador Interactivo Smart",
+    "price": 110400,
+    "currency_price": "$",
+    "description": "Rascador con elementos interactivos y sensores de movimiento para estimular el juego en gatos.",
+    "image": "https://media.doitcenter.com.pa/media/catalog/product/5/2/528ki04091_ehbkmq210yiviaud.jpg",
+    "quantity": 15,
+    "category": 1
+    },
+    {
+    "id": 7,
+    "name": "Juguete Laser Automatizado",
+    "price": 79968,
+    "currency_price": "$",
+    "description": "Dispositivo láser automático con patrones de movimiento aleatorios para mantener entretenido a tu gato.",
+    "image": "https://s.alicdn.com/@sc04/kf/He256fe445ea44d5fbd29aef0db29df7fj/Upgrade-Automatic-Boredom-Buster-Cat-Laser-Toy-Rechargeable-Interactive-Real-Random-Trajectory-Pointer-Simple-Style-New.jpg_300x300.jpg",
+    "quantity": 8,
+    "category": 1
+    },
+    {
+    "id": 8,
+    "name": "Bebedero Térmico IoT",
+    "price": 159968,
+    "currency_price": "$",
+    "description": "Bebedero inteligente con control de temperatura para mantener el agua fresca en cualquier clima.",
+    "image": "https://media.falabella.com/falabellaCO/157590790_02/w=1500,h=1500,fit=cover",
+    "quantity": 25,
+    "category": 2
+    },
+    {
+    "id": 9,
+    "name": "Puerta Inteligente RFID",
+    "price": 380800,
+    "currency_price": "$",
+    "description": "Puerta automática que se desbloquea con el collar RFID de tu mascota para acceso controlado.",
+    "image": "https://m.media-amazon.com/images/I/71oJ9HXbyYL._AC_UF894,1000_QL80_.jpg",
+    "quantity": 5,
+    "category": 3
+    },
+    {
+    "id": 10,
+    "name": "Cama Climatizada Smart",
+    "price": 304000,
+    "currency_price": "$",
+    "description": "Cama inteligente con sensores de temperatura para regular el calor y confort óptimo de tu mascota.",
+    "image": "https://s.alicdn.com/@sc04/kf/H702b84aba1844552b3ee73fb8cf44986X/OEM-ODM-Intelligent-Temperature-Control-Pet-Bed-Adjustable-Heating-Cooling-Dog-Sleeping-Bed-for-Medium-Large-Dogs.jpg",
+    "quantity": 12,
+    "category": 4
+    }
+]
