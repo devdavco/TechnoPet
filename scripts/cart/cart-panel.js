@@ -1,4 +1,4 @@
-import { obtenerProductos } from "../../services/api_products.js";
+import { obtenerProductos, descontarStock } from "../../services/api_products.js";
 import {
   leerCarrito,
   cambiarCantidad,
@@ -56,9 +56,10 @@ class CartPanel extends HTMLElement {
     if (accion === "remove") quitarDelCarrito(item.dataset.id);
     if (accion === "clear") vaciarCarrito();
     if (accion === "checkout") {
-      // Compra simulada: no hay pagos en el proyecto, solo vaciamos el carrito
-      this.compraRealizada = true;
-      vaciarCarrito();
+      // Evita que un doble clic descuente el stock dos veces
+      boton.disabled = true;
+      this.finalizarCompra();
+      return;
     }
 
     // Al volver a dibujar, el botón pulsado se reemplaza y se pierde el foco.
@@ -72,6 +73,22 @@ class CartPanel extends HTMLElement {
     } else {
       this.querySelector(".offcanvas").focus();
     }
+  }
+
+  async finalizarCompra() {
+    // Primero restamos el stock (necesitamos el carrito lleno) y después lo vaciamos
+    const guardado = await descontarStock(leerCarrito());
+    if (!guardado) {
+      alert("No se pudo completar la compra. Intenta de nuevo.");
+      this.dibujar();
+      return;
+    } 
+
+    // Recargamos los productos para que el panel conozca el stock nuevo
+    this.productos = await obtenerProductos();
+    this.compraRealizada = true;
+    vaciarCarrito();
+    this.querySelector(".offcanvas").focus();
   }
 
   dibujar() {

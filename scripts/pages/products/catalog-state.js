@@ -1,4 +1,4 @@
-import { obtenerProductos } from "../../../services/api_products.js";
+import { obtenerProductos, EVENTO_PRODUCTOS } from "../../../services/api_products.js";
 import { buscarProductos } from "./catalog-search.js";
 import { filtrarProductos, prepararFiltros } from "./filters-component.js";
 import { ordenarProductos, dibujarResumen } from "./order-component.js";
@@ -72,5 +72,11 @@ async function iniciarCatalogo() {
   prepararFiltros(todosLosProductos);
   actualizarCatalogo();
 }
+
+// Después de una compra cambia el stock: recargamos los productos y volvemos a dibujar
+document.addEventListener(EVENTO_PRODUCTOS, async function () {
+  todosLosProductos = await obtenerProductos();
+  actualizarCatalogo();
+});
 
 document.addEventListener("DOMContentLoaded", iniciarCatalogo);
