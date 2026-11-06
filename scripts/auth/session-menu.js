@@ -1,4 +1,4 @@
-import { haySesionAdmin, cerrarSesion } from "./auth.js";
+import { obtenerSesion, cerrarSesion } from "./auth.js";
 
 // Botones de sesión del navbar.
 // Sin sesión: "Login/Registro". Con sesión: "Panel admin" y "Cerrar sesión".
@@ -22,7 +22,8 @@ class SessionMenu extends HTMLElement {
   dibujar() {
     const enAdmin = this.getAttribute("modo") === "admin";
 
-    if (!haySesionAdmin()) {
+    const sesion = obtenerSesion();
+    if (!sesion) {
       this.innerHTML = `
         <a class="btn btn-dark w-100 w-lg-auto" href="./login.html">Login/Registro</a>
       `;
@@ -31,7 +32,7 @@ class SessionMenu extends HTMLElement {
 
     this.innerHTML = `
       <div class="d-flex flex-column flex-lg-row gap-2">
-        ${enAdmin ? "" : `
+        ${enAdmin || sesion.rol !== "admin" ? "" : `
         <a class="btn btn-outline-dark" href="./admin.html">
           <i class="bi bi-speedometer2 me-1" aria-hidden="true"></i>Panel admin
         </a>`}

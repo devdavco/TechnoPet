@@ -1,8 +1,9 @@
-import { iniciarSesion, haySesionAdmin } from "../../auth/auth.js";
+import { iniciarSesion, obtenerSesion } from "../../auth/auth.js";
 
-// Si ya hay sesión iniciada, vamos directo al panel
-if (haySesionAdmin()) {
-  window.location.replace("./admin.html");
+// Si ya hay sesión iniciada, cada rol va a su página
+const sesionActual = obtenerSesion();
+if (sesionActual) {
+  window.location.replace(sesionActual.rol === "admin" ? "./admin.html" : "./index.html");
 }
 
 // Mostrar / ocultar contraseña
@@ -39,9 +40,12 @@ loginForm.addEventListener("submit", (event) => {
 
   const email = document.getElementById("login-email").value;
   const remember = document.getElementById("login-remember").checked;
+  const rol = iniciarSesion(email, passwordInput.value, remember);
 
-  if (iniciarSesion(email, passwordInput.value, remember)) {
+  if (rol === "admin") {
     window.location.href = "./admin.html";
+  } else if (rol) {
+    window.location.href = "./index.html";
   } else {
     loginError.classList.remove("d-none");
   }
