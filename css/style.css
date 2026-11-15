@@ -265,25 +265,31 @@ body {
 }
 
 /* Header y footer */
-#header-component {
+/* Header: fondo crema + franja teal en todas las páginas */
+#header-component,
+#header-admin {
   background-color: #FAF6F0;
   border-bottom: 4px solid var(--tp-teal);
   box-shadow: 0 4px 14px rgba(10, 63, 64, 0.12);
 }
-#header-component > * {
+#header-component > *,
+#header-admin > * {
   background: transparent !important;
 }
 
-/* Enlaces del menú en verde oscuro */
+/* Enlaces del menú */
 #header-component .nav-link,
-#header-component a:not(.btn) {
+#header-component a:not(.btn),
+#header-admin .nav-link,
+#header-admin a:not(.btn) {
   color: var(--tp-dark-teal) !important;
   font-weight: 600;
 }
 #header-component .nav-link:hover,
-#header-component a:not(.btn):hover {
+#header-component a:not(.btn):hover,
+#header-admin .nav-link:hover,
+#header-admin a:not(.btn):hover {
   color: var(--tp-terracotta) !important;
-}
 }
 
 /* Tarjetas: blancas, muy redondeadas, con barra de color arriba */
