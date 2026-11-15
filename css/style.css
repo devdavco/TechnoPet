@@ -265,15 +265,25 @@ body {
 }
 
 /* Header y footer */
-#header-component > * {
-  background-color: #fff !important;
+#header-component {
+  background-color: #FAF6F0;
   border-bottom: 4px solid var(--tp-teal);
+  box-shadow: 0 4px 14px rgba(10, 63, 64, 0.12);
+}
+#header-component > * {
+  background: transparent !important;
 }
 
-/* Footer arena con línea de color arriba */
-#footer-component > * {
-  background-color: var(--tp-sand) !important;
-  border-top: 4px solid var(--tp-orange);
+/* Enlaces del menú en verde oscuro */
+#header-component .nav-link,
+#header-component a:not(.btn) {
+  color: var(--tp-dark-teal) !important;
+  font-weight: 600;
+}
+#header-component .nav-link:hover,
+#header-component a:not(.btn):hover {
+  color: var(--tp-terracotta) !important;
+}
 }
 
 /* Tarjetas: blancas, muy redondeadas, con barra de color arriba */
