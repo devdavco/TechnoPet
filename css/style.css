@@ -232,66 +232,168 @@ body {
     flex: 0 0 250px;
   }
 }
-/* ===== TECHNOPET: tema de color y bordes redondeados ===== */
+/* ===== TECHNOPET v2: crema cálido con acentos de color ===== */
 :root {
   --tp-dark-teal: #0A3F40;
   --tp-teal: #1BB8AA;
   --tp-terracotta: #D05A3F;
   --tp-orange: #E09633;
   --tp-cream: #FAF6F0;
+  --tp-sand: #F1E4CF;
   --tp-navy: #1E2B38;
-  --tp-radius: 1rem;
+  --tp-radius: 1.25rem;
+
+  --bs-body-bg: var(--tp-cream);
+  --bs-body-color: var(--tp-navy);
 }
 
-/* Fondo general: crema con un degradado suave de teal arriba */
+/* Fondo: crema con manchas suaves de teal y naranja */
+html,
 body {
-  background-color: var(--tp-cream);
-  background-image: linear-gradient(180deg, #DDF3F0 0%, var(--tp-cream) 380px);
-  background-repeat: no-repeat;
+  background-color: var(--tp-cream) !important;
+  background-image:
+    radial-gradient(circle at 0% 0%, rgba(27, 184, 170, 0.28) 0, transparent 45%),
+    radial-gradient(circle at 100% 30%, rgba(224, 150, 51, 0.25) 0, transparent 40%),
+    radial-gradient(circle at 0% 85%, rgba(208, 90, 63, 0.18) 0, transparent 40%) !important;
+  background-attachment: fixed !important;
   color: var(--tp-navy);
 }
 
-/* Tarjetas: blancas, redondeadas y con sombra suave para que resalten sobre el fondo */
-.card,
-.border.rounded.bg-white,
-.bg-light.border.rounded {
-  background-color: #fff;
-  border: 1px solid rgba(10, 63, 64, 0.08) !important;
-  border-radius: var(--tp-radius) !important;
-  box-shadow: 0 4px 14px rgba(10, 63, 64, 0.08);
-  overflow: hidden; /* que las imágenes respeten la esquina redondeada */
+/* Franja de color para las secciones del home */
+.bg-neutral-cream {
+  background: var(--tp-sand) !important;
 }
 
-/* Imágenes, inputs, botones y modales */
+/* Header y footer */
+#header-component > *,
+header,
+.navbar {
+  background-color: var(--tp-dark-teal) !important;
+  box-shadow: 0 4px 16px rgba(10, 63, 64, 0.25);
+}
+header a,
+.navbar a,
+.navbar .nav-link,
+.navbar .navbar-brand {
+  color: #fff !important;
+}
+header a:hover,
+.navbar .nav-link:hover {
+  color: var(--tp-orange) !important;
+}
+footer,
+#footer-component > * {
+  background-color: var(--tp-navy) !important;
+  color: #fff !important;
+}
+footer a,
+#footer-component a {
+  color: var(--tp-teal) !important;
+}
+
+/* Tarjetas: blancas, muy redondeadas, con barra de color arriba */
+.card,
+.border.rounded,
+.border.rounded-4,
+.bg-light.border {
+  background-color: #fff !important;
+  border: 0 !important;
+  border-top: 5px solid var(--tp-orange) !important;
+  border-radius: var(--tp-radius) !important;
+  box-shadow: 0 10px 30px rgba(30, 43, 56, 0.12);
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px rgba(30, 43, 56, 0.18);
+}
+
+/* Cada tarjeta del equipo y de productos alterna color de barra */
+.row > div:nth-child(3n + 1) > .card { border-top-color: var(--tp-teal) !important; }
+.row > div:nth-child(3n + 2) > .card { border-top-color: var(--tp-orange) !important; }
+.row > div:nth-child(3n + 3) > .card { border-top-color: var(--tp-terracotta) !important; }
+
+/* Redondeo general */
 .rounded,
 .rounded-3,
+.rounded-4,
 img.img-fluid {
   border-radius: var(--tp-radius) !important;
 }
 .form-control,
 .form-select,
-.input-group > .btn,
 .btn {
   border-radius: 0.75rem;
 }
-.input-group > .form-control { border-top-right-radius: 0; border-bottom-right-radius: 0; }
-.input-group > .btn { border-top-left-radius: 0; border-bottom-left-radius: 0; }
+.input-group > .form-control {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.input-group > .btn {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
 .modal-content,
 .offcanvas,
 .table-responsive {
   border-radius: var(--tp-radius);
 }
 
-/* Botones oscuros con el color de marca */
-.btn-dark {
-  background-color: var(--tp-dark-teal);
-  border-color: var(--tp-dark-teal);
+/* Campos */
+.form-control,
+.form-select {
+  border: 1.5px solid #d9cdbb;
+  background-color: #fffdf9;
 }
-.btn-dark:hover {
-  background-color: var(--tp-teal);
+.form-control:focus,
+.form-select:focus {
   border-color: var(--tp-teal);
+  box-shadow: 0 0 0 0.25rem rgba(27, 184, 170, 0.25);
 }
 
-/* Acentos */
-.text-primary { color: var(--tp-terracotta) !important; }
-.breadcrumb a { color: var(--tp-dark-teal); }
+/* Botones */
+.btn-dark {
+  background-color: var(--tp-terracotta) !important;
+  border-color: var(--tp-terracotta) !important;
+  color: #fff !important;
+  font-weight: 600;
+}
+.btn-dark:hover {
+  background-color: var(--tp-dark-teal) !important;
+  border-color: var(--tp-dark-teal) !important;
+}
+.btn-outline-dark {
+  border: 2px solid var(--tp-dark-teal);
+  color: var(--tp-dark-teal);
+  font-weight: 600;
+}
+.btn-outline-dark:hover {
+  background-color: var(--tp-dark-teal);
+  color: #fff;
+}
+
+/* Texto y acentos */
+h1,
+h2,
+h3 {
+  color: var(--tp-dark-teal);
+}
+.text-primary {
+  color: var(--tp-terracotta) !important;
+}
+.text-secondary,
+.text-body-secondary,
+.text-muted {
+  color: #5a6672 !important;
+}
+.breadcrumb a {
+  color: var(--tp-terracotta);
+  font-weight: 600;
+}
+.eyebrow {
+  color: var(--tp-terracotta);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
