@@ -1,6 +1,7 @@
 body {
   margin: 0;
   padding: 0;
+  background-color: #fdefd9;
 }
 
 /* p, h1, h2,h3,h4,h5 {
@@ -231,3 +232,66 @@ body {
     flex: 0 0 250px;
   }
 }
+/* ===== TECHNOPET: tema de color y bordes redondeados ===== */
+:root {
+  --tp-dark-teal: #0A3F40;
+  --tp-teal: #1BB8AA;
+  --tp-terracotta: #D05A3F;
+  --tp-orange: #E09633;
+  --tp-cream: #FAF6F0;
+  --tp-navy: #1E2B38;
+  --tp-radius: 1rem;
+}
+
+/* Fondo general: crema con un degradado suave de teal arriba */
+body {
+  background-color: var(--tp-cream);
+  background-image: linear-gradient(180deg, #DDF3F0 0%, var(--tp-cream) 380px);
+  background-repeat: no-repeat;
+  color: var(--tp-navy);
+}
+
+/* Tarjetas: blancas, redondeadas y con sombra suave para que resalten sobre el fondo */
+.card,
+.border.rounded.bg-white,
+.bg-light.border.rounded {
+  background-color: #fff;
+  border: 1px solid rgba(10, 63, 64, 0.08) !important;
+  border-radius: var(--tp-radius) !important;
+  box-shadow: 0 4px 14px rgba(10, 63, 64, 0.08);
+  overflow: hidden; /* que las imágenes respeten la esquina redondeada */
+}
+
+/* Imágenes, inputs, botones y modales */
+.rounded,
+.rounded-3,
+img.img-fluid {
+  border-radius: var(--tp-radius) !important;
+}
+.form-control,
+.form-select,
+.input-group > .btn,
+.btn {
+  border-radius: 0.75rem;
+}
+.input-group > .form-control { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+.input-group > .btn { border-top-left-radius: 0; border-bottom-left-radius: 0; }
+.modal-content,
+.offcanvas,
+.table-responsive {
+  border-radius: var(--tp-radius);
+}
+
+/* Botones oscuros con el color de marca */
+.btn-dark {
+  background-color: var(--tp-dark-teal);
+  border-color: var(--tp-dark-teal);
+}
+.btn-dark:hover {
+  background-color: var(--tp-teal);
+  border-color: var(--tp-teal);
+}
+
+/* Acentos */
+.text-primary { color: var(--tp-terracotta) !important; }
+.breadcrumb a { color: var(--tp-dark-teal); }
