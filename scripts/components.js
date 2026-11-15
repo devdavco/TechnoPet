@@ -48,3 +48,60 @@ if (typeof window !== "undefined") {
   window.loadComponent = loadComponent;
   window.loadSharedComponents = loadSharedComponents;
 }
+// ===== TECHNOPET: efectos con JavaScript =====
+(function () {
+  "use strict";
+
+  // 1. Aparecer al hacer scroll
+  const SELECTOR = ".card, section h2, section h1, .row.mt-4 > div, main h1";
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.12 }
+  );
+
+  function prepare(root) {
+    root.querySelectorAll(SELECTOR).forEach((el, i) => {
+      if (el.dataset.revealReady) return;
+      el.dataset.revealReady = "1";
+      el.classList.add("reveal");
+      // Escalonado: cada elemento aparece un poquito después del anterior
+      el.style.transitionDelay = (i % 4) * 90 + "ms";
+      observer.observe(el);
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    prepare(document);
+
+    // Tus componentes (productos, categorías) se dibujan después: los vigilamos
+    new MutationObserver(() => prepare(document)).observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+
+    // 2. Sombra del header al bajar
+    const onScroll = () => {
+      document
+        .querySelectorAll("#header-component, #header-admin")
+        .forEach((h) => h.classList.toggle("header-scrolled", window.scrollY > 10));
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  });
+
+  // 3. Rebote del carrito: llama a window.bumpCart() cuando agregues un producto
+  window.bumpCart = function () {
+    const btn = document.querySelector("#header-component [class*='cart'], #header-component .bi-cart, #header-component .bi-cart3");
+    if (!btn) return;
+    btn.classList.remove("cart-bump");
+    void btn.offsetWidth; // reinicia la animación
+    btn.classList.add("cart-bump");
+  };
+})();
