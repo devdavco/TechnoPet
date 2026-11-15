@@ -50,3 +50,32 @@ loginForm.addEventListener("submit", (event) => {
     loginError.classList.remove("d-none");
   }
 });
+document.addEventListener("DOMContentLoaded", () => {
+  // Intentamos obtener la sesión del sessionStorage (o localStorage si lo guardas ahí)
+  const sessionData = sessionStorage.getItem("technopet-session") || localStorage.getItem("technopet-session");
+  
+  // O si guardas los datos del usuario logueado en otra llave como 'currentUser'
+  // const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+  // Buscamos el contenedor o botón en el navbar donde debería ir la info de usuario
+  const navActionContainer = document.querySelector("#header-component") || document.querySelector("nav"); // Ajusta según tu HTML
+
+  if (sessionData) {
+    try {
+      const user = JSON.parse(sessionData);
+      // Extraemos el nombre o el correo (dependiendo de qué guardes en el objeto)
+      const identifier = user.nombre || user.email || "Mi Cuenta";
+
+      // Si tienes un espacio reservado para mostrar el usuario, lo actualizamos:
+      // Por ejemplo, si quieres que el botón de cerrar sesión o un span muestre el nombre:
+      const logoutBtn = document.querySelector("#logout-btn") || document.querySelector("button.btn-dark");
+      
+      if (logoutBtn) {
+        // Opcional: Agregar el nombre junto al botón o cambiar el texto
+        console.log("Usuario logueado:", identifier);
+      }
+    } catch (e) {
+      console.error("Error al parsear los datos de la sesión", e);
+    }
+  }
+});
