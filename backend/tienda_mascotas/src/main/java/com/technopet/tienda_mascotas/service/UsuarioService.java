@@ -26,9 +26,34 @@ public class UsuarioService {
         if (usuarioRepository.existsByEmail(usuario.getEmail())) {
             throw new IllegalArgumentException("El correo electrónico ya está registrado.");
         }
-        if (usuario.getRol() == null) {
-            usuario.setRol(RolUsuario.COMPRADOR);
-        }
+        /*
+         * 1) FORZAR id = null: el registro SIEMPRE crea un usuario nuevo.
+         *
+         * Problema que resuelve:
+         *   save() de JPA hace dos cosas distintas según el id:
+         *     - id == null  -> INSERT (crea un registro nuevo; MySQL asigna el id).
+         *     - id con valor -> busca ese id y, si existe, hace UPDATE (lo sobrescribe).
+         *   Si un cliente enviara {"id": 1, ...} en /registro, en lugar de crear
+         *   una cuenta nueva REEMPLAZARÍA los datos del usuario 1 (Laura, la admin),
+         *   incluida su contraseña. Con esto, el id que mande el cliente se ignora.
+         */
+        usuario.setId(null);
+
+        /*
+         * 2) FORZAR rol = COMPRADOR: nadie puede auto-asignarse ADMIN.
+         *
+         * Problema que resuelve:
+         *   Antes solo se ponía COMPRADOR si el rol venía vacío (null). Si alguien
+         *   enviaba {"rol": "ADMIN"}, se registraba como administrador sin permiso.
+         *   Regla de negocio: el registro público siempre crea compradores.
+         *   Un ADMIN se crea por otra vía controlada (por ejemplo, directamente en
+         *   la base de datos, como Laura en inserts.sql).
+         *
+         * Nota: el "if (rol == null)" que había antes ya no hace falta, porque
+         * ahora el rol se asigna siempre, venga lo que venga.
+         */
+        usuario.setRol(RolUsuario.COMPRADOR);
+
         return usuarioRepository.save(usuario);
     }
 
