@@ -398,3 +398,145 @@ h3 {
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
+
+/* ===== TECHNOPET: efectos especiales ===== */
+
+/* 1. Scroll suave */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 2. Aparecer al hacer scroll (lo activa effects.js) */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* 3. Imágenes con zoom suave dentro de su marco redondeado */
+.card img,
+.img-fluid {
+  transition: transform 0.5s ease;
+}
+.card:hover img {
+  transform: scale(1.06);
+}
+
+/* 4. Botones con brillo que cruza al pasar el mouse */
+.btn-dark,
+.btn-customer {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+.btn-dark::after,
+.btn-customer::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  transform: skewX(-20deg);
+}
+.btn-dark:hover::after,
+.btn-customer:hover::after {
+  left: 130%;
+  transition: left 0.7s ease;
+}
+.btn-dark:hover,
+.btn-customer:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(208, 90, 63, 0.35);
+}
+.btn:active {
+  transform: scale(0.97);
+}
+
+/* 5. Links del menú con subrayado animado */
+#header-component .nav-link,
+#header-admin .nav-link {
+  position: relative;
+}
+#header-component .nav-link::after,
+#header-admin .nav-link::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 2px;
+  width: 0;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--tp-terracotta, #D05A3F);
+  transition: width 0.3s ease, left 0.3s ease;
+}
+#header-component .nav-link:hover::after,
+#header-admin .nav-link:hover::after {
+  width: 70%;
+  left: 15%;
+}
+
+/* 6. Header que se sombrea al bajar (lo activa effects.js) */
+#header-component,
+#header-admin {
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  transition: box-shadow 0.3s ease;
+}
+.header-scrolled {
+  box-shadow: 0 8px 24px rgba(10, 63, 64, 0.25) !important;
+}
+
+/* 7. Fondo con degradado que respira suavemente */
+@keyframes tp-breathe {
+  0%, 100% { background-position: 0% 0%, 100% 30%, 0% 85%; }
+  50%      { background-position: 8% 6%, 92% 38%, 6% 78%; }
+}
+body {
+  animation: tp-breathe 18s ease-in-out infinite;
+}
+
+/* 8. Carrito: pequeño rebote al agregar un producto
+      (agrega la clase "cart-bump" al botón desde tu JS, ver effects.js) */
+@keyframes tp-bump {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.35) rotate(-8deg); }
+  60%  { transform: scale(0.9) rotate(4deg); }
+  100% { transform: scale(1); }
+}
+.cart-bump {
+  animation: tp-bump 0.5s ease;
+}
+
+/* 9. Logo con pequeño movimiento al pasar el mouse */
+#header-component img[alt*="echno"],
+#header-component .navbar-brand img {
+  transition: transform 0.4s ease;
+}
+#header-component .navbar-brand:hover img {
+  transform: rotate(-4deg) scale(1.05);
+}
+
+/* 10. Foco de campos con latido suave */
+.form-control:focus,
+.form-select:focus {
+  transform: translateY(-1px);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Respeta a quien prefiere menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  body { animation: none; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
