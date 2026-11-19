@@ -6,6 +6,8 @@ import com.technopet.tienda_mascotas.repository.CategoriaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class CategoriasServiceJpa implements CategoriaService {
@@ -13,7 +15,7 @@ public class CategoriasServiceJpa implements CategoriaService {
     private final CategoriaRepository categoriaRepository;
 
     @Override
-    public Categoria findById(Long id) {
+    public Categoria findById(Integer id) {
         return categoriaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Categoria no encontrada: " + id));
     }
@@ -24,16 +26,31 @@ public class CategoriasServiceJpa implements CategoriaService {
     }
 
     @Override
-    public Categoria update(Long id, Categoria categoria) {
+    public Categoria update(Integer id, Categoria categoria) {
         Categoria existente = findById(id);
-        existente.setNombre(categoria.getNombre());
+        if(categoria.getNombre() != null && !categoria.getNombre().isBlank() ){
+            existente.setNombre(categoria.getNombre());
+
+        }
+        if( categoria.getDescripcion() != null && !categoria.getDescripcion().isBlank()){
+            existente.setDescripcion(categoria.getDescripcion());
+        }
+        if(categoria.getImagen() != null && !categoria.getImagen().isBlank()){
+            existente.setImagen(categoria.getImagen());
+        }
+
         return categoriaRepository.save(existente);
     }
 
     @Override
-    public Categoria deleteById(Long id) {
+    public Categoria deleteById(Integer id) {
         Categoria existente = findById(id);
         categoriaRepository.delete(existente);
         return existente;
+    }
+
+    @Override
+    public List<Categoria> findAll() {
+        return categoriaRepository.findAll();
     }
 }

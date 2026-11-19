@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CategoriaDTO {
-    private Long id;
+    private Integer id;
 
     @NotBlank(message="El nombre es obligatorio")
     @Size(max=100, message ="Máximo 100 caracteres")
