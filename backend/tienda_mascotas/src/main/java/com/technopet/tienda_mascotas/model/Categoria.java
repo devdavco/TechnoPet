@@ -15,15 +15,15 @@ import lombok.NoArgsConstructor;
 public class Categoria {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
-    @Column( unique = true, nullable = false)
+    @Column( unique = true, nullable = false,length = 100)
     private String nombre;
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "TEXT")
     private String descripcion;
 
-    @Column(nullable = false)
+    @Column(length = 500)
     private String imagen;
 
 }
