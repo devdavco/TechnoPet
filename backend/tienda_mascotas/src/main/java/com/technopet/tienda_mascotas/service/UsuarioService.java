@@ -3,6 +3,10 @@ import com.technopet.tienda_mascotas.model.RolUsuario;
 import com.technopet.tienda_mascotas.model.Usuario;
 import com.technopet.tienda_mascotas.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,7 +14,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class UsuarioService {
+public class UsuarioService implements UserDetailsService {
 
     private final UsuarioRepository usuarioRepository;
 
@@ -57,10 +61,10 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
-    public Optional<Usuario> login(String email, String contrasena) {
-        return usuarioRepository.findByEmail(email)
-                .filter(u -> u.getContrasena().equals(contrasena));
-    }
+//    public Optional<Usuario> login(String email, String contrasena) {
+//        return usuarioRepository.findByEmail(email)
+//                .filter(u -> u.getContrasena().equals(contrasena));
+//    }
 
     public Optional<Usuario> actualizar(Integer id, Usuario datosActualizados) {
         return usuarioRepository.findById(id).map(existente -> {
@@ -83,5 +87,18 @@ public class UsuarioService {
         }
         usuarioRepository.deleteById(id);
         return true;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+        Usuario usuario = usuarioRepository.findByEmail(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado " +username));
+
+        return User.builder()
+                .username(usuario.getEmail())
+                .password(usuario.getContrasena())
+                .roles(usuario.getRol().name())
+                .build();
     }
 }

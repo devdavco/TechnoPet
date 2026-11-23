@@ -26,10 +26,9 @@ public class JwtUtil {
 
     //Metodo que fabrica el token y se lee de abajo hacia arriva
 
-    public String generateToken(Usuario usuario){
+    public String generateToken(UserDetails userDetails){
         return Jwts.builder()
-                .subject(usuario.getEmail())
-                .claims("rol",usuario.getRol().name())
+                .subject(userDetails.getUsername())
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(getSigningKey())

@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,6 +41,7 @@ public class PedidoController {
 
     // GET /api/pedidos/usuario/1
     @GetMapping("/usuario/{usuarioId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> listarPorUsuario(@PathVariable Integer usuarioId) {
         try {
             return ResponseEntity.ok(pedidoService.findByUsuario(usuarioId).stream()
@@ -76,6 +78,7 @@ public class PedidoController {
 
     // DELETE /api/pedidos/5
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> eliminarPedido(@PathVariable Integer id) {
         try {
             pedidoService.deleteById(id);
