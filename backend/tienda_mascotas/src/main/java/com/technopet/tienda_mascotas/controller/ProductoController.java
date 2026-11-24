@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +38,7 @@ public class ProductoController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> crearProducto(@Valid @RequestBody ProductoDTO dto) {
         try {
             Categoria categoria = categoriaService.findById(dto.getCategoriaId());
@@ -50,6 +52,7 @@ public class ProductoController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> actualizarProducto(@PathVariable Integer id,
                                                 @Valid @RequestBody ProductoDTO dto) {
         try {
@@ -65,6 +68,7 @@ public class ProductoController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> eliminarProducto(@PathVariable Integer id) {
         return productoService.eliminar(id)
                 ? ResponseEntity.noContent().build()

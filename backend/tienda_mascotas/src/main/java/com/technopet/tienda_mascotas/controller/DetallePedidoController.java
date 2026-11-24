@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,6 +42,7 @@ public class DetallePedidoController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> crear(@Valid @RequestBody DetallePedidoDTO dto) {
         try {
             DetallePedido creado = detallePedidoService.save(
@@ -54,6 +56,7 @@ public class DetallePedidoController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> actualizarCantidad(@PathVariable Integer id,
                                                 @Valid @RequestBody CambioCantidadDTO dto) {
         try {
@@ -67,6 +70,7 @@ public class DetallePedidoController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> eliminar(@PathVariable Integer id) {
         try {
             detallePedidoService.deleteById(id);
