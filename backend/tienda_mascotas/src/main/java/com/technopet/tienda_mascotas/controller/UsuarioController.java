@@ -56,8 +56,6 @@ public class UsuarioController {
 
     @PostMapping("/login")
     public AuthResponseDTO login(@RequestBody AuthRequestDTO request) {
-        String email = request.getEmail();
-        String contrasena = request.getContrasena();
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(), request.getContrasena()));
@@ -72,7 +70,9 @@ public class UsuarioController {
     @PutMapping("/usuarios/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Usuario> actualizarUsuario(@PathVariable Integer id, @RequestBody Usuario usuario) {
-        usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
+        if (usuario.getContrasena() != null && !usuario.getContrasena().isBlank()) {
+            usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
+        }
         return usuarioService.actualizar(id, usuario)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
