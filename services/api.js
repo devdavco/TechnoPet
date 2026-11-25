@@ -3,7 +3,7 @@
 // En local (Live Server) usamos el backend en el puerto 8080; en producción, el backend desplegado.
 const ES_LOCAL = ["localhost", "127.0.0.1"].includes(window.location.hostname);
 const API_LOCAL = "http://localhost:8080/api";
-const API_PRODUCCION = "https://p01--technotpet--hdlxpkfybyqg.code.run"; // TODO: URL pública del backend desplegado
+const API_PRODUCCION = "https://p01--technotpet--hdlxpkfybyqg.code.run/api"; // TODO: URL pública del backend desplegado
 
 export const API_URL = ES_LOCAL ? API_LOCAL : API_PRODUCCION;
 
