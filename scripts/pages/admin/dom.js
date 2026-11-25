@@ -59,10 +59,7 @@ function getImage(product) {
 /* ===== Botones de acciones (iguales en la tabla y en las tarjetas) ===== */
 
 function createActionsHTML(product) {
-  // El texto e ícono del menú cambian según si el producto está visible u oculto
-  const toggleText = isActive(product) ? "Ocultar en tienda" : "Mostrar en tienda";
-  const toggleIcon = isActive(product) ? "bi-eye-slash" : "bi-eye";
-
+  // "Ocultar en tienda" se quitó: el backend no guarda si un producto está visible u oculto.
   // data-id guarda el id del producto para saber a cuál pertenece cada botón.
   // data-bs-popper-config hace que el menú no se corte dentro de la tabla.
   return `
@@ -82,11 +79,6 @@ function createActionsHTML(product) {
           <i class="bi bi-three-dots-vertical" aria-hidden="true"></i>
         </button>
         <ul class="dropdown-menu dropdown-menu-end">
-          <li>
-            <button type="button" class="dropdown-item btn-toggle" data-id="${product.id}">
-              <i class="bi ${toggleIcon} me-2" aria-hidden="true"></i>${toggleText}
-            </button>
-          </li>
           <li>
             <button type="button" class="dropdown-item btn-duplicate" data-id="${product.id}">
               <i class="bi bi-copy me-2" aria-hidden="true"></i>Duplicar

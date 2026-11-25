@@ -1,4 +1,5 @@
-import { obtenerProductos, descontarStock } from "../../services/api_products.js";
+import { obtenerProductos, finalizarPedido } from "../../services/api_products.js";
+import { obtenerSesion } from "../auth/auth.js";
 import {
   leerCarrito,
   cambiarCantidad,
@@ -76,13 +77,25 @@ class CartPanel extends HTMLElement {
   }
 
   async finalizarCompra() {
-    // Primero restamos el stock (necesitamos el carrito lleno) y después lo vaciamos
-    const guardado = await descontarStock(leerCarrito());
-    if (!guardado) {
-      alert("No se pudo completar la compra. Intenta de nuevo.");
+    // El pedido se guarda a nombre del usuario: sin sesión hay que iniciarla primero
+    const sesion = obtenerSesion();
+    if (!sesion) {
+      alert("Inicia sesión para finalizar tu compra.");
+      window.location.href = "./login.html";
+      return;
+    }
+
+    // Primero creamos el pedido en el backend (necesitamos el carrito lleno) y después lo vaciamos
+    try {
+      await finalizarPedido(sesion.id, leerCarrito());
+    } catch (error) {
+      console.error("No se pudo completar la compra:", error);
+      alert(`No se pudo completar la compra: ${error.message}`);
+      this.productos = await obtenerProductos();
+      ajustarCarrito(this.productos);
       this.dibujar();
       return;
-    } 
+    }
 
     // Recargamos los productos para que el panel conozca el stock nuevo
     this.productos = await obtenerProductos();

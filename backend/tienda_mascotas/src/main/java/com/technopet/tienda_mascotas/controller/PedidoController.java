@@ -17,7 +17,6 @@ import java.util.NoSuchElementException;
 
 @RestController                    // responde JSON
 @RequestMapping("/api/pedidos")    // todas las URL empiezan así
-@CrossOrigin(origins = "*")        // deja que tu página (otro puerto) lo llame
 @RequiredArgsConstructor
 public class PedidoController {
 

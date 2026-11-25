@@ -21,7 +21,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 public class UsuarioController {
 
@@ -62,8 +61,10 @@ public class UsuarioController {
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
         String token = jwtUtil.generateToken(userDetails);
+        Usuario usuario = usuarioService.buscarPorEmail(request.getEmail()).orElseThrow();
 
-        return new AuthResponseDTO(token);
+        return new AuthResponseDTO(token, usuario.getId(), usuario.getNombre(),
+                usuario.getEmail(), usuario.getRol().name());
 
     }
 

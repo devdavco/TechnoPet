@@ -1,7 +1,6 @@
-import { getProducts } from "./api.js";
+import { getProducts, createProduct, updateProduct, deleteProduct } from "./api.js";
 import { getCategories } from "../../../services/api_categories.js";
-import { getStoredProducts, saveProducts } from "./storage.js";
-import { isActive, findProductById, generateId, filterProducts } from "./utils.js";
+import { findProductById, filterProducts } from "./utils.js";
 import {
   renderProducts,
   renderCategoryOptions,
@@ -14,7 +13,6 @@ import {
 import {
   setupViewEvent,
   setupEditEvent,
-  setupToggleEvent,
   setupDuplicateEvent,
   setupDeleteEvent,
   setupSaveEvent,
@@ -34,8 +32,6 @@ let editingId = null;
 // Texto del buscador del header (layouts/headerAdmin.html)
 let searchText = "";
 
-const NO_SPACE_MESSAGE = "No hay espacio suficiente para guardar el producto";
-
 // Pinta la lista y conecta los botones nuevos.
 // Se llama después de cada cambio, porque al pintar se crean botones nuevos.
 function renderAll() {
@@ -43,19 +39,14 @@ function renderAll() {
 
   setupViewEvent(handleView);
   setupEditEvent(handleEdit);
-  setupToggleEvent(handleToggle);
   setupDuplicateEvent(handleDuplicate);
   setupDeleteEvent(handleDelete);
 }
 
-// Guarda en localStorage y vuelve a pintar.
-// Devuelve true si se guardó; si no, avisa con un toast que no hay espacio.
-function saveAndRender() {
-  const saved = saveProducts(products);
-  renderAll();
-
-  if (!saved) showToast(NO_SPACE_MESSAGE);
-  return saved;
+// Muestra el error del backend en el toast
+function showError(action, error) {
+  console.error(`No se pudo ${action}:`, error);
+  showToast(`No se pudo ${action}: ${error.message}`);
 }
 
 /* ===== Acciones ===== */
@@ -76,7 +67,7 @@ function handleEdit(id) {
   openEditModal();
 }
 
-function handleSave(event) {
+async function handleSave(event) {
   // Evita que el formulario recargue la página
   event.preventDefault();
 
@@ -85,45 +76,37 @@ function handleSave(event) {
   const product = findProductById(products, editingId);
   if (!product) return;
 
-  // Copiamos los datos del formulario al producto (el id, la imagen y "active" no cambian)
-  const formData = getProductFormData();
-  product.name = formData.name;
-  product.price = formData.price;
-  product.currency_price = formData.currency_price;
-  product.description = formData.description;
-  product.quantity = formData.quantity;
-  product.category = formData.category;
+  // Datos del formulario + los que no se editan aquí (id e imagen)
+  const changes = { ...product, ...getProductFormData() };
+
+  try {
+    const updated = await updateProduct(editingId, changes);
+    products = products.map((p) => (p.id === updated.id ? updated : p));
+  } catch (error) {
+    showError("actualizar el producto", error);
+    return;
+  }
 
   editingId = null;
   closeModal();
-  if (saveAndRender()) showToast("Producto actualizado");
+  renderAll();
+  showToast("Producto actualizado");
 }
 
-function handleToggle(id) {
+async function handleDuplicate(id) {
   const product = findProductById(products, id);
   if (!product) return;
 
-  // Si estaba visible lo ocultamos, y al revés
-  product.active = !isActive(product);
-
-  if (!saveAndRender()) return;
-
-  if (product.active) {
-    showToast("Producto visible en la tienda");
-  } else {
-    showToast("Producto oculto en la tienda");
+  try {
+    const copy = await createProduct({ ...product, name: product.name + " (copia)" });
+    products.push(copy);
+  } catch (error) {
+    showError("duplicar el producto", error);
+    return;
   }
-}
 
-function handleDuplicate(id) {
-  const product = findProductById(products, id);
-  if (!product) return;
-
-  // { ...product } crea una copia del objeto; luego cambiamos el id y el nombre
-  const copy = { ...product, id: generateId(products), name: product.name + " (copia)" };
-  products.push(copy);
-
-  if (saveAndRender()) showToast("Producto duplicado");
+  renderAll();
+  showToast("Producto duplicado");
 }
 
 // Solo abre el modal de confirmación; se elimina en handleConfirmDelete
@@ -135,13 +118,22 @@ function handleDelete(id) {
   openDeleteModal(product);
 }
 
-function handleConfirmDelete() {
-  // Dejamos en la lista todos los productos menos el que se va a eliminar
+async function handleConfirmDelete() {
+  try {
+    await deleteProduct(editingId);
+  } catch (error) {
+    // Por ejemplo, si el producto ya está en algún pedido la base de datos no deja borrarlo
+    showError("eliminar el producto", error);
+    return;
+  }
+
+  // Dejamos en la lista todos los productos menos el que se eliminó
   products = products.filter((product) => product.id !== editingId);
 
   editingId = null;
   closeModal();
-  if (saveAndRender()) showToast("Producto eliminado");
+  renderAll();
+  showToast("Producto eliminado");
 }
 
 /*
@@ -150,32 +142,26 @@ function handleConfirmDelete() {
 
     document.dispatchEvent(new CustomEvent("product:created", { detail: product }));
 
-  El objeto product tiene la misma estructura que data/productos.json:
+  El objeto product tiene esta estructura (el id lo asigna el backend):
     {
-      "id": 6,                 // opcional: si no viene, se genera aquí
       "name": "Arenero automático",
       "price": 150000,
       "currency_price": "$",
       "description": "Arenero autolimpiable",   // puede venir vacío
-      "image": "data:image/jpeg;base64,...",   // o null si no se subió imagen
+      "image": "https://...",                   // URL de la imagen, o null
       "quantity": 2,
-      "category": 4            // id de data/categories.json
+      "category": 4            // id de la categoría
     }
 */
-function handleProductCreated(event) {
+async function handleProductCreated(event) {
   const product = event.detail;
   if (!product) return;
 
-  if (!product.id) {
-    product.id = generateId(products);
-  }
-
-  products.push(product);
-
-  // Si no se pudo guardar, sacamos el producto de la lista para no mostrar algo que no quedó guardado
-  if (!saveProducts(products)) {
-    products.pop();
-    showToast(NO_SPACE_MESSAGE);
+  try {
+    const created = await createProduct(product);
+    products.push(created);
+  } catch (error) {
+    showError("crear el producto", error);
     return;
   }
 
@@ -187,16 +173,7 @@ function handleProductCreated(event) {
 
 async function init() {
   categories = await getCategories();
-
-  // Si hay productos guardados en localStorage los usamos; si no, los traemos del JSON
-  const storedProducts = getStoredProducts();
-  if (storedProducts !== null) {
-    products = storedProducts;
-  } else {
-    products = await getProducts();
-  }
-
-  console.log("Productos cargados:\n" + JSON.stringify(products, null, 2));
+  products = await getProducts();
 
   renderCategoryOptions(categories);
   renderAll();

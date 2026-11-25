@@ -1,4 +1,4 @@
-import { leerUsuarios, guardarUsuario } from "../../auth/usuarios.js";
+import { apiFetch } from "../../../services/api.js";
 import { validarRegistro } from "./validar-registro.js";
 
 const form = document.getElementById("registro-form");
@@ -50,12 +50,13 @@ function limpiarFormulario() {
   });
 }
 
-form.addEventListener("submit", (evento) => {
+form.addEventListener("submit", async (evento) => {
   evento.preventDefault();
   mensaje.classList.add("d-none");
 
   const datos = leerFormulario();
-  const errores = validarRegistro(datos, leerUsuarios());
+  // El correo repetido lo revisa el backend al registrar
+  const errores = validarRegistro(datos, []);
   mostrarErrores(errores);
 
   const primerError = Object.keys(errores)[0];
@@ -64,24 +65,28 @@ form.addEventListener("submit", (evento) => {
     return;
   }
 
+  // Mismos nombres de campo que la entidad Usuario del backend
   const usuario = {
-    id: Date.now(),
-    nombreCompleto: datos.nombreCompleto,
-    telefono: datos.telefono,
+    nombre: datos.nombreCompleto,
+    numTelefono: datos.telefono,
     email: datos.email,
-    password: datos.password,
-    novedades: datos.novedades,
-    rol: "cliente",
-    fechaRegistro: new Date().toISOString(),
+    contrasena: datos.password,
   };
 
-  if (!guardarUsuario(usuario)) {
-    mostrarMensaje("No se pudo crear tu cuenta. Intenta de nuevo.", "danger");
+  let creado;
+  try {
+    creado = await apiFetch("/registro", { method: "POST", body: usuario });
+  } catch (error) {
+    if (error.status === 400) {
+      // El backend responde 400 cuando el correo ya está registrado
+      mostrarErrores({ email: error.message });
+      document.getElementById("email").focus();
+    } else {
+      mostrarMensaje("No se pudo crear tu cuenta. Intenta de nuevo.", "danger");
+    }
     return;
   }
 
-  console.log("Usuario creado:\n" + JSON.stringify({ ...usuario, password: "********" }, null, 2));
-
   limpiarFormulario();
-  mostrarMensaje(`¡Cuenta creada con éxito, ${usuario.nombreCompleto}!`, "success");
+  mostrarMensaje(`¡Cuenta creada con éxito, ${creado.nombre}! Ya puedes iniciar sesión.`, "success");
 });

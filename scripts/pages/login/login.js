@@ -29,7 +29,7 @@ forgotLink.addEventListener("click", (event) => {
 const loginForm = document.getElementById("login-form");
 const loginError = document.getElementById("login-error");
 
-loginForm.addEventListener("submit", (event) => {
+loginForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   loginError.classList.add("d-none");
 
@@ -40,13 +40,22 @@ loginForm.addEventListener("submit", (event) => {
 
   const email = document.getElementById("login-email").value;
   const remember = document.getElementById("login-remember").checked;
-  const rol = iniciarSesion(email, passwordInput.value, remember);
+  let rol;
+  try {
+    rol = await iniciarSesion(email, passwordInput.value, remember);
+  } catch (error) {
+    console.error("Error al iniciar sesión:", error);
+    loginError.textContent = "No se pudo conectar con el servidor. Intenta de nuevo.";
+    loginError.classList.remove("d-none");
+    return;
+  }
 
   if (rol === "admin") {
     window.location.href = "./admin.html";
   } else if (rol) {
     window.location.href = "./index.html";
   } else {
+    loginError.textContent = "Correo o contraseña incorrectos.";
     loginError.classList.remove("d-none");
   }
 });

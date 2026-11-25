@@ -29,7 +29,7 @@ const contentForm = {
     },
     image: {
       title: "Imagen del producto",
-      placeholder: "PNG, JPG o WebP (Hasta 5MB)",
+      placeholder: "https://ejemplo.com/imagen.jpg",
     },
   },
 };
@@ -44,22 +44,12 @@ class NewProductComponent extends HTMLElement {
     </button>
     `;
 
+    // El backend guarda la imagen como enlace (máximo 500 caracteres), no como archivo
     const inputImage = `
     <div class="col-12">
-        <span class="form-label fw-medium d-block">${contentForm.inputs.image.title}</span>
-        <label for="image" class="dropzone d-flex flex-column align-items-center justify-content-center text-center gap-2 p-3 p-md-4 rounded-4 w-100">
-        <span class="dropzone-icon d-flex justify-content-center align-items-center rounded-circle fs-4">
-            <i class="bi bi-cloud-arrow-up" aria-hidden="true"></i>
-        </span>
-        <span data-dropzone-text>
-            <span class="badge btn-brand fs-6 fw-medium">Subir imagen</span>
-            o arrastra un archivo aquí
-        </span>
-        <img data-preview class="d-none rounded-3 object-fit-cover" width="96" height="96" alt="Vista previa" />
-        <small class="text-secondary">${contentForm.inputs.image.placeholder}</small>
-        </label>
-        <input type="file" class="visually-hidden" id="image" name="image" accept="image/png,image/jpeg,image/webp" />
-        <div class="dropzone-feedback text-danger small mt-2"></div>
+        <label for="image" class="form-label fw-medium">${contentForm.inputs.image.title}</label>
+        <input type="url" class="form-control" id="image" name="image" maxlength="500" placeholder="${contentForm.inputs.image.placeholder}" />
+        <div class="invalid-feedback">Ingresa una URL válida (que empiece por https://)</div>
     </div>`;
 
     this.innerHTML = `
@@ -147,7 +137,6 @@ class NewProductComponent extends HTMLElement {
     `;
 
     this.initForm();
-    this.initDropzone();
   }
 
   initForm() {
@@ -160,50 +149,6 @@ class NewProductComponent extends HTMLElement {
     modal.addEventListener("hidden.bs.modal", () => {
       form.reset();
       form.classList.remove("was-validated");
-    });
-  }
-
-  initDropzone() {
-    const form = this.querySelector("#productForm");
-    const zone = this.querySelector(".dropzone");
-    const input = this.querySelector("#image");
-    const preview = this.querySelector("[data-preview]");
-    const text = this.querySelector("[data-dropzone-text]");
-
-    const showPreview = () => {
-      const file = input.files[0];
-      if (!file) return resetPreview();
-      preview.src = URL.createObjectURL(file);
-      preview.classList.remove("d-none");
-      text.textContent = file.name;
-    };
-
-    const resetPreview = () => {
-      preview.classList.add("d-none");
-      preview.removeAttribute("src");
-      text.innerHTML = `<span class="badge btn-brand fs-6 fw-medium">Subir imagen</span> o arrastra un archivo aquí`;
-      this.querySelector(".dropzone-feedback").textContent = "";
-      zone.classList.remove("is-invalid");
-    };
-
-    input.addEventListener("change", showPreview);
-    form.addEventListener("reset", resetPreview);
-
-    ["dragenter", "dragover"].forEach((evt) =>
-      zone.addEventListener(evt, (e) => {
-        e.preventDefault();
-        zone.classList.add("is-dragging");
-      }),
-    );
-    ["dragleave", "drop"].forEach((evt) =>
-      zone.addEventListener(evt, (e) => {
-        e.preventDefault();
-        zone.classList.remove("is-dragging");
-      }),
-    );
-    zone.addEventListener("drop", (e) => {
-      input.files = e.dataTransfer.files;
-      showPreview();
     });
   }
 }
