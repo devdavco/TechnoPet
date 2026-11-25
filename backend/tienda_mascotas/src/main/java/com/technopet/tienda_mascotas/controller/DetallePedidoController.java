@@ -16,7 +16,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/detalle-pedidos")
-@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 public class DetallePedidoController {
 
@@ -41,8 +40,8 @@ public class DetallePedidoController {
         }
     }
 
+    // Cualquier usuario con sesión puede agregar productos a un pedido (lo usa el carrito al finalizar la compra)
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> crear(@Valid @RequestBody DetallePedidoDTO dto) {
         try {
             DetallePedido creado = detallePedidoService.save(

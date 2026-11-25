@@ -3,54 +3,10 @@ const rules = {
   description: { min: 15, required: false },
 };
 
-// Validamos formato y peso; las dimensiones las ajusta fileToDataURL antes de guardar
-const IMAGE = {
-  types: ["image/png", "image/jpeg", "image/webp"],
-  maxSize: 5 * 1024 * 1024, // 5MB
-};
+// La imagen es una URL (el backend guarda solo el enlace, hasta 500 caracteres).
+// type="url" y maxlength="500" del input ya validan el formato y el largo.
 
-// Redimensiona y comprime la imagen para que quepa en localStorage
-const fileToDataURL = (file, maxSize = 800) =>
-  new Promise((resolve, reject) => {
-    const img = new Image();
-    const url = URL.createObjectURL(file);
-
-    img.onload = () => {
-      const scale = Math.min(1, maxSize / Math.max(img.width, img.height));
-      const canvas = document.createElement("canvas");
-      canvas.width = Math.round(img.width * scale);
-      canvas.height = Math.round(img.height * scale);
-      canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
-
-      URL.revokeObjectURL(url);
-      resolve(canvas.toDataURL("image/jpeg", 0.8));
-    };
-
-    img.onerror = reject;
-    img.src = url;
-  });
-
-const validateImage = (input) => {
-  const zone = input.form.querySelector(".dropzone");
-  const feedback = input.form.querySelector(".dropzone-feedback");
-  const file = input.files[0];
-  let error = "";
-
-  // La imagen es opcional
-  if (file) {
-    if (!IMAGE.types.includes(file.type)) {
-      error = "Formato no permitido. Usa PNG, JPG o WebP.";
-    } else if (file.size > IMAGE.maxSize) {
-      error = "La imagen supera los 5MB.";
-    }
-  }
-
-  input.setCustomValidity(error);
-  feedback.textContent = error;
-  zone.classList.toggle("is-invalid", Boolean(error));
-};
-
-export const validateProductForm = async (e) => {
+export const validateProductForm = (e) => {
   e.preventDefault();
   const form = e.target;
 
@@ -68,27 +24,24 @@ export const validateProductForm = async (e) => {
     }
   });
 
-  validateImage(form.elements.image);
-
   form.classList.add("was-validated");
 
   if (!form.checkValidity()) return;
 
   const formData = Object.fromEntries(new FormData(form));
-  const file = form.elements.image.files[0];
 
-  // Misma estructura que data/productos.json. Sin id: lo genera main.js con generateId
+  // Sin id: lo asigna el backend al crear el producto
   const product = {
     name: formData.name.trim(),
     price: Number(formData.price),
     currency_price: "$",
     description: formData.description.trim(),
-    image: file ? await fileToDataURL(file) : null,
+    image: formData.image.trim() || null,
     quantity: Number(formData.stock),
     category: Number(formData.category),
   };
 
-  // main.js escucha este evento: agrega el producto, lo guarda en localStorage y vuelve a pintar la lista
+  // main.js escucha este evento: crea el producto en el backend y vuelve a pintar la lista
   document.dispatchEvent(new CustomEvent("product:created", { detail: product }));
 
   form.reset();

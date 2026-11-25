@@ -6,7 +6,10 @@
 
   let rol = null;
   try {
-    rol = JSON.parse(texto).rol;
+    const sesion = JSON.parse(texto);
+    // El token JWT trae su vencimiento (exp, en segundos); si ya venció, hay que volver a iniciar sesión
+    const token = JSON.parse(atob(sesion.token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/")));
+    if (token.exp * 1000 > Date.now()) rol = sesion.rol;
   } catch (error) {
     // Sin sesión (JSON.parse(null) da null y null.rol falla) o sesión dañada: rol queda en null
   }

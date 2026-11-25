@@ -26,6 +26,10 @@ public class UsuarioService implements UserDetailsService {
         return usuarioRepository.findById(id);
     }
 
+    public Optional<Usuario> buscarPorEmail(String email) {
+        return usuarioRepository.findByEmail(email);
+    }
+
     public Usuario registrar(Usuario usuario) {
         if (usuarioRepository.existsByEmail(usuario.getEmail())) {
             throw new IllegalArgumentException("El correo electrónico ya está registrado.");

@@ -110,7 +110,7 @@
                         <div class="col-8">
                             <label for="product-price" class="form-label">Precio</label>
                             <input type="number" class="form-control" id="product-price" name="price"
-                                min="0" step="any" required />
+                                min="0" step="1" required />
                             <div class="invalid-feedback">El precio no puede ser negativo.</div>
                         </div>
 
@@ -123,7 +123,7 @@
 
                         <div class="col-6">
                             <label for="product-category" class="form-label">Categoría</label>
-                            <!-- Las opciones se llenan desde dom.js con data/categories.json -->
+                            <!-- Las opciones se llenan desde dom.js con las categorías del backend -->
                             <select class="form-select" id="product-category" name="category" required></select>
                             <div class="invalid-feedback">Selecciona una categoría.</div>
                         </div>

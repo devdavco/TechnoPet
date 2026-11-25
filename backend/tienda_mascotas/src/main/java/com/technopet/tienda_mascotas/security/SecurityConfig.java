@@ -3,6 +3,8 @@ package com.technopet.tienda_mascotas.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -28,11 +30,14 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
+                .cors(Customizer.withDefaults()) // usa el bean CorsConfigurationSource de CorsConfig
                 .csrf(csrf -> csrf.ignoringRequestMatchers("/api/**","/auth/**"))//csrf.disable() ¡peligro!
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/login", "/api/registro").permitAll()
+                        .requestMatchers("/api/login", "/api/registro", "/error").permitAll()
+                        // El catálogo (home y products.html) se ve sin iniciar sesión
+                        .requestMatchers(HttpMethod.GET, "/api/productos/**", "/api/categorias/**").permitAll()
                         .anyRequest().authenticated() //Deny by default
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
